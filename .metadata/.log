@@ -71,6 +71,7 @@ This warning can be switched off on the Team > Git > Confirmations and Warnings 
 !ENTRY org.springframework.tooling.boot.ls 1 0 2025-01-13 15:29:04.859
 !MESSAGE Classpath changed for project: portpolio_project
 !SESSION 2025-01-13 15:43:36.840 -----------------------------------------------
+!SESSION 2025-01-13 15:42:40.325 -----------------------------------------------
 eclipse.buildId=4.34.0.202411281622
 java.version=21.0.5
 java.vendor=Eclipse Adoptium
