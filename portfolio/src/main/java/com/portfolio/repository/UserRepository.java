@@ -15,4 +15,6 @@ public interface UserRepository extends JpaRepository<User,String>{
 	public boolean findByUserInfo(String userId, String passWord);
 	
 	public List<User> findByEmail(String email);
+	
+	public List<User> findByUserId(String userId);
 }

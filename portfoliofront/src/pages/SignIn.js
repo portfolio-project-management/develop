@@ -13,6 +13,10 @@ import FormFeedback from './modules/form/FormFeedback';
 import withRoot from './modules/withRoot';
 import { KAKAO_URL, REST_API_KEY, SERVER_URL } from '../Link';
 import ButtonBaseDemo from './modules/form/ImageButton';
+import TextField from './modules/components/TextField';
+
+import AppBarCustom from './modules/components/AppBarCustom';
+import { useNavigate } from 'react-router-dom';
 
 function SignIn() {
   const [sent, setSent] = React.useState(false);
@@ -21,9 +25,7 @@ function SignIn() {
     passWord : ""
   })
 
-  React.useEffect(() => {
-    
-  });
+  const navigate = useNavigate();
 
   const validate = (values) => {
     const errors = required(['email', 'password'], values);
@@ -48,11 +50,17 @@ function SignIn() {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(user)
-    })
+      body: JSON.stringify(user),
+      credentials: "include",
+    })  
     .then(response => response.ok ? response.text() : console.log("로그인 네트워크 오류"))
     .then(data => {
-      console.log(data);
+      alert(data);
+      setUser({ 
+        ...user,
+        passWord:"",
+      })
+      navigate("/");
     })
     .catch(error => console.log(error));
   }
@@ -73,9 +81,7 @@ function SignIn() {
 
   return (
     <React.Fragment>
-      <AppAppBar />
-      <button onClick={handleOnLoginToKakao}>카카오</button>
-      <a href={"https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=" + REST_API_KEY + "&redirect_uri=" + SERVER_URL + "user/signin/kakao"}>dsadas</a>
+      <AppBarCustom ></AppBarCustom>
       <AppForm>
         <React.Fragment>
           <Typography variant="h3" gutterBottom marked="center" align="center">
@@ -84,7 +90,7 @@ function SignIn() {
           <Typography variant="body2" align="center">
             {'회원이 아니신가요? '}
             <Link
-              href="/premium-themes/onepirate/sign-up/" // 링크 수정하기
+              href="/signup" // 링크 수정하기
               align="center"
               underline="always"
             >
@@ -99,31 +105,24 @@ function SignIn() {
         >
           {({ handleSubmit: handleSubmit2, submitting }) => (
             <Box component="form" onSubmit={handleSubmit2} noValidate sx={{ mt: 6 }}>
-              <Field
-                autoComplete="userId"
-                autoFocus
-                component={RFTextField}
-                disabled={submitting || sent}
-                fullWidth
-                label="userId"
-                margin="normal"
-                name="userId"
-                required
-                size="large"
-                onChange={handleOnChange}
+              <TextField
+                  label="userId"
+                  fullWidth
+                  margin="normal"
+                  name='userId'
+                  value={user.userId}  // `user.name`을 직접 사용
+                  onChange={handleOnChange}  // 상태 업데이트 함수 사용
+                  disabled={submitting || sent}
               />
-              <Field
-                fullWidth
-                size="large"
-                component={RFTextField}
-                disabled={submitting || sent}
-                required
-                name="password"
-                autoComplete="current-password"
+              <TextField
                 label="password"
-                type="password"
+                fullWidth
                 margin="normal"
-                onChange={handleOnChange}
+                name='passWord'
+                type="password"
+                value={user.passWord}  // `user.name`을 직접 사용
+                onChange={handleOnChange}  // 상태 업데이트 함수 사용
+                disabled={submitting || sent}
               />
               <FormSpy subscription={{ submitError: true }}>
                 {({ submitError }) =>
