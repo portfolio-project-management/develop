@@ -109,19 +109,13 @@ public class UserService {
 
             
             String userEmail = extractEmailFromUserInfo(response.getBody());
-            //회원 유무 확인
-            List<User> users = userRepository.findByEmail(userEmail);
             
+            // 정상적으로 카카로 로그인 된 사용자 저장
             UUID uuid = UUID.randomUUID(); // 랜덤 인증값 생성
             
-            if(users.size() != 0) {// 회원이면
-            	login.put(uuid.toString(),users.get(0).getEmail());
-            	return uuid.toString();
-            }else { //비회원
-            	login.put(uuid.toString(),"비회원");
-            	return uuid.toString();
-            }
+            login.put(uuid.toString(), userEmail);
             
+            return uuid.toString();
 
         } catch (HttpClientErrorException e) {
             // 오류 처리
@@ -150,5 +144,63 @@ public class UserService {
             e.printStackTrace();
             return null;
         }
+    }
+    
+    
+    public String checkEmail(String hash) {
+    
+    	String result = login.getOrDefault(hash.split("=")[1], "정보없음");
+    	
+    	// 저장되지 않은 정보일 경우 "정보없음"
+    	if(result.equals("정보없음")) {
+    		return "정보없음";
+    	}
+    	
+    	//회원 유무 확인
+        List<User> users = userRepository.findByEmail(result);
+        
+        if(users.size() > 0) {
+        	//회원
+        	// 쿠키, 세션 발급 후 메인으로 리다이렉션
+        }
+    	
+    	return result;
+    }
+    
+    // OTP 전송
+    public String sendOTP() {
+    	String OTP = "";
+    	
+    	//6자리 랜덤 OTP 생성
+    	for(int i=0; i<6; i++) {
+    		OTP += (int)(Math.random() * 9);
+    	}
+    	
+    	
+    	//OTP 전송 ( 보류 )
+    	
+    	
+    	return OTP;
+    }
+    
+    
+    // 회원가입
+    public String userSignup(UserDTO userDTO) {
+    	
+    	if(userRepository.findByEmail(userDTO.getEmail()).size() > 0) {
+    		return "이메일 중복";
+    	}else if(userRepository.findByUserId(userDTO.getUserId()).size() > 0){
+    		return "아이디 중복";
+    	}
+    	
+    	User user = new User();
+    	user.setUserId(userDTO.getUserId());
+    	user.setPassWord(userDTO.getPassWord());
+    	user.setEmail(userDTO.getEmail());
+    	user.setName(userDTO.getName());
+    	user.setId(UUID.randomUUID().toString());
+    	
+    	//데이터베이스 저장 ( 결과 반환 )
+    	return userRepository.save(user) == null? "실패" : "성공";
     }
 }
