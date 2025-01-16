@@ -8,24 +8,22 @@ import lombok.ToString;
 @Setter
 @ToString
 public class UserDTO {
-	
-	private String id;
-	private String name;
-	private String email;
-	private String userId;
-	private String passWord; 
-	
-	
-	public UserDTO(String userId, String passWord) {
-		this.userId = userId;
-		this.passWord = passWord;
-	}
+
+    private String id;
+    private String name;
+    private String email;
+    private String userId;
+    private String passWord;
+    private String phone;
+    private String address;
+
+    public UserDTO(String userId, String passWord) {
+        this.userId = userId;
+        this.passWord = passWord;
+    }
 
 
-	public UserDTO() {
-		super();
-	}
-	
-	
-	
+    public UserDTO() {
+        super();
+    }
 }

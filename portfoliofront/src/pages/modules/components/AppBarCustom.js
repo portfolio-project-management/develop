@@ -1,15 +1,14 @@
 import './AppBarCustom.css';
 
-import React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import { Button } from '@mui/material';
-import { SERVER_URL } from '../../../Link';
-import { useCookies } from 'react-cookie'
+import React from 'react';
+import { useCookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
+import { SERVER_URL } from '../../../Link';
 
-export default function AppBarCustom() {
+export default function AppBarCustom({setUser=(()=>{})}) {
     const [ signinCheck, setSigninCheck ] = React.useState(false);
     // const [ reload, setReload ] = React.useState(true);
 
@@ -28,14 +27,14 @@ export default function AppBarCustom() {
         .then(response => response.text())
         .then(data => {
             console.log(data)
-            if(data === "정보있음"){ // 로그인중
+            if(data !== "세션만료" || data !== "쿠키만료"){ // 로그인중
                 setSigninCheck(true);
+                setUser(data);
             }
         })
         .catch(error => console.log(error))
-    },[])
-
-    function handleLogout(){
+    },[]) 
+function handleLogout(){
         if(cookies){
             fetch(SERVER_URL + "user/logout", {
                 method:"POST",
