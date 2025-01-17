@@ -31,6 +31,8 @@ export default function AppBarCustom({setUser=(()=>{})}) {
             if(data !== "세션만료" && data !== "쿠키만료"){ // 로그인중
                 setSigninCheck(true);
                 setUser(data);
+            }else{
+                setUser("비로그인");
             }
         })
         .catch(error => console.log(error))

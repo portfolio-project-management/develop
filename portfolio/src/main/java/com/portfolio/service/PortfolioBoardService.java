@@ -5,9 +5,10 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -16,7 +17,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.portfolio.dto.PortfolioBoardDTO;
+import com.portfolio.dto.PortfolioBoardListDTO;
 import com.portfolio.entity.PortfolioBoard;
+import com.portfolio.entity.User;
 import com.portfolio.repository.PortfolioBoardRepository;
 import com.portfolio.repository.UserRepository;
 
@@ -29,24 +32,73 @@ public class PortfolioBoardService {
 	@Autowired
 	UserRepository userRepository;
 	
-	public List<PortfolioBoardDTO> getPortfolios(){
+	
+	// 모든 포트폴리오 가지고 오기
+	public List<PortfolioBoardListDTO> getPortfolios(){
 		return portfolioBoardRepostiory.findAll()
 					.stream()
-					.map((portfolioBoard) -> (new PortfolioBoardDTO(
-						portfolioBoard.getId(),portfolioBoard.getTitle(),
-						portfolioBoard.getView(),portfolioBoard.getUser().getUserId(),
-						Arrays.asList(portfolioBoard.getPath().split("\\|")),
-						portfolioBoard.getGoods().size())
+					.map((portfolioBoard) -> (new PortfolioBoardListDTO(
+						portfolioBoard.getTitle(),
+						portfolioBoard.getUser().getUserId(),
+						getFile(portfolioBoard.getUser().getUserId())
 					))
 					.collect(Collectors.toList());
 	}
 	
+	// 모든 포트폴리오 가지고 오기 ( 보류 )
+//		public List<PortfolioBoardListDTO> getPortfolios(){
+//			return portfolioBoardRepostiory.findAll()
+//						.stream()
+//						.map((portfolioBoard) -> (new PortfolioBoardDTO(
+//							portfolioBoard.getId(),portfolioBoard.getTitle(),
+//							portfolioBoard.getView(),portfolioBoard.getUser().getUserId(),
+//							Arrays.asList(portfolioBoard.getPath().split("\\|")),
+//							portfolioBoard.getGoods().size())
+//						))
+//						.collect(Collectors.toList());
+//		}
+	
+	//포트폴리오 한 개 가져오기
+	public PortfolioBoardDTO getPortfolio (String userId) {
+		
+		// 특정 유저의 포폴 가져가기
+		User user = userRepository.findByUserId(userId).get(0);
+		
+		//작성된 포트폴리오가 있으면 가지고 가고 아니면 빈 값 가져가기
+		List<PortfolioBoard> portfolioBoards = portfolioBoardRepostiory.findByUser(user);
+		
+		if(portfolioBoards.size() > 0) {
+			
+			PortfolioBoard portfolioBoard = portfolioBoards.get(0);
+			
+			// DTO로 변환 후 반환
+			return new PortfolioBoardDTO(
+					portfolioBoard.getId(),
+					portfolioBoard.getTitle(),
+					portfolioBoard.getView(),
+					portfolioBoard.getUser().getUserId(),
+					Arrays.asList(portfolioBoard.getPath().split("\\|")),
+					portfolioBoard.getGoods().size()	
+			);
+		}
+		
+		
+		//작성한 포폴이 없을 경우 빈 값 반환
+		return new PortfolioBoardDTO();
+		
+	}
+	
 	public String addPortfolio(PortfolioBoardDTO portfolioBoardDTO, List<MultipartFile> files) {
+		
 		
 		PortfolioBoard portfolioBoard = new PortfolioBoard();
 		
+		User user = userRepository.findByUserId(portfolioBoardDTO.getUserId()).get(0);
+		
 		// 이미 추가한 적이 있는 사용자인지 확인
-		List<PortfolioBoard> checkPortfolioBoard = portfolioBoardRepostiory.findByUserId(portfolioBoardDTO.getUserId());
+		List<PortfolioBoard> checkPortfolioBoard = portfolioBoardRepostiory.findByUser(user);
+		
+		
 		
 		try {
 			portfolioBoard.setPath(saveFiles(files, portfolioBoardDTO.getUserId()));
@@ -56,13 +108,25 @@ public class PortfolioBoardService {
 			return "저장실패";
 		}
 		
-		portfolioBoard.setTitle(portfolioBoardDTO.getTitle());
+		// 제목이 존재하지 않으면 유저 ID로 대체
+		if(portfolioBoardDTO.getTitle() == null) {
+			portfolioBoard.setTitle(portfolioBoardDTO.getUserId());
+		}else {
+			portfolioBoard.setTitle(portfolioBoardDTO.getTitle());
+		}
+		
 		
 		if(checkPortfolioBoard.size() > 0) { // 수정일때
 			portfolioBoard.setId(checkPortfolioBoard.get(0).getId());
 		}else { // 생성일 때
-			portfolioBoard.setUser(userRepository.findByUserId(portfolioBoardDTO.getUserId()).get(0));
+			portfolioBoard.setUser(user);
 		}
+		
+		
+		System.out.println(portfolioBoardDTO);
+		System.out.println(portfolioBoard);
+		
+		portfolioBoardRepostiory.save(portfolioBoard);
 		
 		return "저장성공";
 		
@@ -71,12 +135,12 @@ public class PortfolioBoardService {
 	// 파일 저장
 	private String saveFiles (List<MultipartFile> files, String userId) throws IOException {
 		
-		String uploadDir = "/uploads/images/" + userId; // 사진 업로드 경로 하드코딩으로 진행함
+		String uploadDir = "C:\\uploads\\images\\" + userId; // 사진 업로드 경로 하드코딩으로 진행함
 		Path path = Paths.get(uploadDir);
-		
+
 		// 경로가 존재하면 해당 디렉토리 내 모든 파일 삭제
-	    if (Files.exists(path.getParent())) {
-	        try (Stream<Path> oldFiles = Files.walk(path.getParent())) {
+	    if (Files.exists(path)) {
+	        try (Stream<Path> oldFiles = Files.walk(path)) {
 	        	oldFiles.filter(Files::isRegularFile)
 	                 .forEach(filePath -> {
 	                     try {
@@ -88,7 +152,7 @@ public class PortfolioBoardService {
 	        }
 	    } else {
 	        // 경로가 없으면 디렉토리 생성
-	        Files.createDirectories(path.getParent());
+	        Files.createDirectories(path);
 	    }
 	    
 	    
@@ -96,17 +160,91 @@ public class PortfolioBoardService {
 		// 받아온 파일 서버에 저장
 		String result = "";
 		
+		//메인은 별도로 저장
+		String uploadMainDir = "C:\\uploads\\images\\main"; // 메인사진 업로드 경로 ( 하드 코딩으로 진행 - 나중에 다른 폴더로 빼기 )
+		Path mainPath = Paths.get(uploadMainDir);
+		
+		//메인 디럭터리가 없으면 생성
+		Files.createDirectories(mainPath);
+		
+		int cnt = 0;
+		
 		for(MultipartFile file : files) {
-			String fileName = UUID.randomUUID().toString() + "-" + file.getOriginalFilename();
 			
-			path = Paths.get(uploadDir,fileName);
+			String fileName = file.getOriginalFilename();
 			
-			Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+			// 메인에 나올 사진은 초반에 다른 디렉토리에 한번 더 저장
+			if(cnt == 0) {
+				if (fileName != null && fileName.lastIndexOf('.') != -1) {
+				    String mainFileName = userId + "." + fileName.substring(fileName.lastIndexOf('.')+1);
+				    
+				    Path mainFilePath = Paths.get(uploadMainDir, mainFileName);
+					
+					Files.copy(file.getInputStream(), mainFilePath, StandardCopyOption.REPLACE_EXISTING);
+				}
+			}
 			
-			result += path.toString() + "\\|";
+			// 나머지 사진들을 순서대로 저장
+			if (fileName != null && fileName.lastIndexOf('.') != -1) {
+			    fileName = (cnt++) + "." + fileName.substring(fileName.lastIndexOf('.')+1);
+			}
+			
+			Path filePath = Paths.get(uploadDir,fileName);
+			
+			Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+			
+			result += filePath.toString() + "\\|";
 		}
 		
 	   return result;
 	    
+	}
+	
+	
+	// 메인 파일 ( 메인에서 제목이 userId인 파일 가져오기 )
+	public String getFile(String userId) {
+		String mainDir = "C:\\uploads\\images\\main"; // 메인사진 업로드 경로 ( 하드 코딩으로 진행 - 나중에 다른 폴더로 빼기 )
+		String fileName = userId + ".jpg";
+		
+		// 파일을 byte[]로 읽어서 Base64로 변환
+        byte[] fileBytes = Files.readAllBytes(filePath);
+        String base64Encoded = Base64.getEncoder().encodeToString(fileBytes);
+        //files.add(base64Encoded); // base64 문자열 리스트에 추가
+        
+		return "";
+	}
+	
+	
+	// 파일 전송
+	public List<String> getFiles(String userId){
+		String downloadDir = "C:\\uploads\\images\\" + userId; // 사진 업로드 경로 하드코딩으로 진행함
+		Path path = Paths.get(downloadDir);
+		
+		List<String> files = new ArrayList();
+
+		// 경로가 존재하면 해당 디렉토리 파일 List에 저장
+	    if (Files.exists(path)) {
+	        try (Stream<Path> oldFiles = Files.walk(path)) {
+	        	
+	        	oldFiles.filter(Files::isRegularFile)
+	                 .forEach(filePath -> {
+	                     try {
+	                    	// 파일을 byte[]로 읽어서 Base64로 변환
+                             byte[] fileBytes = Files.readAllBytes(filePath);
+                             String base64Encoded = Base64.getEncoder().encodeToString(fileBytes);
+                             files.add(base64Encoded); // base64 문자열 리스트에 추가
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+	                 });
+	        	
+	        } catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+	    }
+	    
+		return files;
 	}
 }
