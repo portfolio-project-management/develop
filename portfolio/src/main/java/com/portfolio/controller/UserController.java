@@ -50,13 +50,13 @@ public class UserController {
 	
 	// 카카오 로그인
 	@RequestMapping("/signin/kakao")
-	public void kakaoSignin(@RequestParam("code") String code,HttpServletResponse response) throws IOException {
+	public void kakaoSignin(@RequestParam String code,HttpServletResponse response) throws IOException {
 		response.sendRedirect("http://localhost:3000/signup/hash="+userService.sendRequest(code));
 	}
 	
 	// 카카오 로그인 정상확인
 	@GetMapping("/checkemail")
-	public String checkEmail(@RequestParam("hash") String hash) {
+	public String checkEmail(@RequestParam String hash) {
 		return userService.checkEmail(hash);
 	}
 	

@@ -13,8 +13,9 @@ public class UserDTO {
 	private String name;
 	private String email;
 	private String userId;
-	private String passWord; 
-	
+	private String passWord;
+	private String phone;
+	private String address;
 	
 	public UserDTO(String userId, String passWord) {
 		this.userId = userId;

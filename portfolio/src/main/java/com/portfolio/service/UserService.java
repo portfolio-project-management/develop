@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.ThreadLocalRandom;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -173,7 +174,7 @@ public class UserService {
     	
     	//6자리 랜덤 OTP 생성
     	for(int i=0; i<6; i++) {
-    		OTP += (int)(Math.random() * 9);
+    		OTP += (int)(ThreadLocalRandom.current().nextDouble() * 9);
     	}
     	
     	
@@ -199,6 +200,8 @@ public class UserService {
     	user.setEmail(userDTO.getEmail());
     	user.setName(userDTO.getName());
     	user.setId(UUID.randomUUID().toString());
+    	user.setPhone(userDTO.getPhone());
+    	user.setAddress(userDTO.getAddress());
     	
     	//데이터베이스 저장 ( 결과 반환 )
     	return userRepository.save(user) == null? "실패" : "성공";

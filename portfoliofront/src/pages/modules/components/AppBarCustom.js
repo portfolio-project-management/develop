@@ -9,7 +9,7 @@ import { SERVER_URL } from '../../../Link';
 import { useCookies } from 'react-cookie'
 import { useNavigate } from 'react-router-dom';
 
-export default function AppBarCustom() {
+export default function AppBarCustom({setUser=(()=>{})}) {
     const [ signinCheck, setSigninCheck ] = React.useState(false);
     // const [ reload, setReload ] = React.useState(true);
 
@@ -28,8 +28,9 @@ export default function AppBarCustom() {
         .then(response => response.text())
         .then(data => {
             console.log(data)
-            if(data === "정보있음"){ // 로그인중
+            if(data !== "세션만료" && data !== "쿠키만료"){ // 로그인중
                 setSigninCheck(true);
+                setUser(data);
             }
         })
         .catch(error => console.log(error))
@@ -63,9 +64,9 @@ export default function AppBarCustom() {
                 <Typography variant="h4" sx={{textAlign:'right',  flexGrow: 57, bgcolor: 'black' }}>
                     {/* 로그인 여부에 따라 다르게 출력 */}
                     {signinCheck?
-                    <a href='/signin' className='custom_a' onClick={handleLogout}>Logout</a>
+                    <a href='/' className='custom_a' onClick={handleLogout}>Logout</a>
                     :
-                    <a href='/' className='custom_a'>Login</a>
+                    <a href='/signin' className='custom_a'>Login</a>
                     }
                 </Typography>
             </Toolbar>
