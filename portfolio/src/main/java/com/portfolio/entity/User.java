@@ -1,8 +1,12 @@
 package com.portfolio.entity;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -34,6 +38,10 @@ public class User {
 
     @Column(nullable = false)
     private String address;
+    
+    // 채팅방 참가 관계 설정
+    @ManyToMany(mappedBy = "participants")
+    private Set<Room> rooms = new HashSet<>();
 }
 
 
