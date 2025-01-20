@@ -48,6 +48,9 @@ public class User {
 	private List<Good> goods;
 	
 	@OneToMany(cascade=CascadeType.ALL, mappedBy="user")
+	private List<Comment> comments;
+	
+	@OneToMany(cascade=CascadeType.ALL, mappedBy="user")
 	private List<PortfolioBoard> portfolioBoards;
 	
 }

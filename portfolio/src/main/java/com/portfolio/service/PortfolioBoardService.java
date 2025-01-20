@@ -41,7 +41,7 @@ public class PortfolioBoardService {
 						portfolioBoard.getTitle(),
 						portfolioBoard.getUser().getUserId(),
 						getFile(portfolioBoard.getUser().getUserId())
-					))
+					)))
 					.collect(Collectors.toList());
 	}
 	
@@ -98,7 +98,7 @@ public class PortfolioBoardService {
 		// 이미 추가한 적이 있는 사용자인지 확인
 		List<PortfolioBoard> checkPortfolioBoard = portfolioBoardRepostiory.findByUser(user);
 		
-		
+		portfolioBoard.setUser(user);
 		
 		try {
 			portfolioBoard.setPath(saveFiles(files, portfolioBoardDTO.getUserId()));
@@ -108,6 +108,7 @@ public class PortfolioBoardService {
 			return "저장실패";
 		}
 		
+		
 		// 제목이 존재하지 않으면 유저 ID로 대체
 		if(portfolioBoardDTO.getTitle() == null) {
 			portfolioBoard.setTitle(portfolioBoardDTO.getUserId());
@@ -116,15 +117,14 @@ public class PortfolioBoardService {
 		}
 		
 		
-		if(checkPortfolioBoard.size() > 0) { // 수정일때
+		if(checkPortfolioBoard.size() > 0) { // 수정일때 ( 기존 데이터가 존재 시 )
 			portfolioBoard.setId(checkPortfolioBoard.get(0).getId());
-		}else { // 생성일 때
-			portfolioBoard.setUser(user);
 		}
 		
 		
-		System.out.println(portfolioBoardDTO);
-		System.out.println(portfolioBoard);
+		// System.out.println(portfolioBoardDTO);
+		
+		//System.out.println(portfolioBoard); ( 출력하지 말 것 ( 오버플로우 발생... 이유는 모르겠음 ) )
 		
 		portfolioBoardRepostiory.save(portfolioBoard);
 		
@@ -206,12 +206,22 @@ public class PortfolioBoardService {
 		String mainDir = "C:\\uploads\\images\\main"; // 메인사진 업로드 경로 ( 하드 코딩으로 진행 - 나중에 다른 폴더로 빼기 )
 		String fileName = userId + ".jpg";
 		
+		Path filePath = Paths.get(mainDir,fileName);
+		
 		// 파일을 byte[]로 읽어서 Base64로 변환
-        byte[] fileBytes = Files.readAllBytes(filePath);
-        String base64Encoded = Base64.getEncoder().encodeToString(fileBytes);
-        //files.add(base64Encoded); // base64 문자열 리스트에 추가
+		try {
+			byte[] fileBytes = Files.readAllBytes(filePath);
+			String base64Encoded = Base64.getEncoder().encodeToString(fileBytes);
+
+			// 64비트로 변환된 메인 파일 전송
+			return base64Encoded;
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
         
-		return "";
+		// 예외 시 "전송오류" 반환
+		return "전송오류";
 	}
 	
 	

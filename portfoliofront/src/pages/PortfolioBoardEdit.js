@@ -3,6 +3,7 @@ import { SERVER_URL } from "../Link";
 import AppBarCustom from "./modules/components/AppBarCustom";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-final-form";
+import { Button } from "@mui/material";
 
 
 export default function PortfolioBoardEdit(){
@@ -86,6 +87,9 @@ export default function PortfolioBoardEdit(){
 
     //저장
     function handleSavePortfolio() {
+        // 정상적인 파일 수 확인
+        let cnt = 0;
+
         if(files.length > 0){ // 파일이 존재하면
 
             const formData = new FormData();
@@ -98,6 +102,10 @@ export default function PortfolioBoardEdit(){
             files.forEach((fileBase64, index) => {
                 console.log(fileBase64);
                 if(fileBase64 !== ""){ // 사진이 없는 배열은 무시
+
+                    // 정상적인 파일 수 확인
+                    cnt++;
+                    
                     // Base64 문자열에서 "data:image/*;base64," 부분 제거
                     const file = base64ToFile(fileBase64, `file_${index}.jpg`); // 파일 이름 지정
 
@@ -105,6 +113,11 @@ export default function PortfolioBoardEdit(){
                 }
             });
 
+            //만약 모든 배열원소가 비어있으면 (파일 업로드가 없으면) 종료
+            if(cnt === 0){
+                alert("파일이 존재하지 않습니다.");
+                return;
+            }
 
             // 서버에 저장값 전송
             fetch(SERVER_URL + "portfolioboard/add",{
@@ -148,6 +161,15 @@ export default function PortfolioBoardEdit(){
         }
     }
 
+    function handleDeleteFile(e) {
+        // console.log(e.target.name, "파일변경");
+        
+        const copyFiles = [...files];
+        copyFiles.splice(e.target.name,1);
+
+        setFiles(copyFiles);
+    }
+
     return(
         <div>
             <AppBarCustom  setUser={setUser}></AppBarCustom>
@@ -164,10 +186,11 @@ export default function PortfolioBoardEdit(){
                             backgroundImage: file ? `url(data:image/jpeg;base64,${file})` : 'none',
                             backgroundSize: 'cover', // 배경 이미지 크기 조정
                             backgroundPosition: 'center', // 배경 이미지 위치 설정
-                            width: '800px',
-                            height: '500px',
+                            width: '1100px',
+                            height: '800px',
                             border: '1px solid #ccc', // 스타일 추가 (선택사항)
-                        }}></input>
+                    }}></input>
+                    <Button color="warning" name={index} onClick={handleDeleteFile}>삭제</Button>
                     {/* <img src={`data:image/jpeg;base64,${file}`} width={700} height={500}></img> */}
                 </div>
             ))}
