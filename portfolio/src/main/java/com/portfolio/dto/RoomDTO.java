@@ -1,41 +1,22 @@
 package com.portfolio.dto;
 
-import java.util.List;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
-import com.portfolio.entity.User;
-
+@Getter
+@Setter
+@ToString
 public class RoomDTO {
-	private Long id;
+	private long roomId;
 	private String roomName;
-	private List<UserDTO> participants;
 	
-	public RoomDTO(Long id, String roomName, List<UserDTO> participants) {
-		this.id = id;
-		this.roomName = roomName;
-		this.participants = participants;
-	}
-	
-	public Long getID() {
-		return id;
-	}
-	
-	public void setId(Long id) {
-		this.id = id;
-	}
-	
-	public String getRoomName() {
-		return roomName;
-	}
-
-	public void setRoomName(String roomName) {
+	public RoomDTO(long roomId, String roomName) {
+		this.roomId = roomId;
 		this.roomName = roomName;
 	}
-
-	public List<UserDTO> getParticipants() {
-		return participants;
-	}
-
-	public void setParticipants(List<UserDTO> participants) {
-		this.participants = participants;
+	
+	public RoomDTO() {
+		super();
 	}
 }

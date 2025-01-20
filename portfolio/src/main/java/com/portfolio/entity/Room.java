@@ -1,18 +1,12 @@
 package com.portfolio.entity;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -24,20 +18,12 @@ import lombok.ToString;
 public class Room {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private long roomId;
 	
-	@Column(nullable = false)
-	private String roomName;
-	
-	@ManyToMany
-	@JoinTable(
-		name = "room_user",
-		joinColumns = @JoinColumn(name = "room_id"),
-		inverseJoinColumns = @JoinColumn(name = "user_id")
-	)
-	private Set<User> participants = new HashSet<>();
-	
-	// 메시지 리스트
-	@OneToMany(mappedBy = "room")
-	private List<Message> messages;
+    @Column(nullable = false)
+    private String roomName;
+    
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "userId")
+    private User user;
 }

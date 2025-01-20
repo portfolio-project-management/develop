@@ -1,6 +1,7 @@
 package com.portfolio.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -76,5 +77,10 @@ public class UserController {
 	@GetMapping("/sendotp")
 	public String sendOTP() {
 		return userService.sendOTP();
+	}
+	
+	@GetMapping("/users")
+	public List<UserDTO> getUsers() {
+		return userService.getAllUsers();
 	}
 }

@@ -30,10 +30,12 @@ export default function AppBarCustom({setUser=(()=>{})}) {
             if(data !== "세션만료" && data !== "쿠키만료"){ // 로그인중
                 setSigninCheck(true);
                 setUser(data);
+            }else{
+                setUser("비로그인");
             }
         })
         .catch(error => console.log(error))
-    },[]) 
+    },[])
 function handleLogout(){
         if(cookies){
             fetch(SERVER_URL + "user/logout", {
@@ -62,11 +64,10 @@ function handleLogout(){
                 <Typography variant="h4" sx={{textAlign:'right',  flexGrow: 57, bgcolor: 'black' }}>
                     {/* 로그인 여부에 따라 다르게 출력 */}
                     {signinCheck?
-                    <a href='/signin' className='custom_a' onClick={handleLogout}>Logout</a>
+                    <a href='/' className='custom_a' onClick={handleLogout}>Logout</a>
                     :
-                    <a href='/' className='custom_a'>Login</a>
+                    <a href='/signin' className='custom_a'>Login</a>
                     }
-                    
                 </Typography>
             </Toolbar>
         </AppBar>

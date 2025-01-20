@@ -3,6 +3,8 @@ package com.portfolio.entity;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -24,10 +26,10 @@ public class User {
     @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String email;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String userId;
 
     @Column(nullable = false)
@@ -38,10 +40,6 @@ public class User {
 
     @Column(nullable = false)
     private String address;
-    
-    // 채팅방 참가 관계 설정
-    @ManyToMany(mappedBy = "participants")
-    private Set<Room> rooms = new HashSet<>();
 }
 
 

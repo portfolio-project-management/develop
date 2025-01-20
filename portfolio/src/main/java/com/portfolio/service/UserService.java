@@ -1,6 +1,7 @@
 package com.portfolio.service;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
@@ -28,7 +29,7 @@ public class UserService {
 	HashMap<String,String> login = new HashMap();
 	
 	@Autowired
-	UserRepository userRepository; 
+	UserRepository userRepository;
 	
 	public String userLogin(UserDTO userDTO) {
 		User user = new User();
@@ -204,5 +205,38 @@ public class UserService {
     	
     	//데이터베이스 저장 ( 결과 반환 )
     	return userRepository.save(user) == null? "실패" : "성공";
+    }
+    
+    // 사용자 목록 반환
+    public List<UserDTO> getAllUsers() {
+    	List<User> users = userRepository.findAll();
+    	List<UserDTO> userDTOs = new ArrayList<>();
+    	
+    	for(User user: users) {
+    		UserDTO userDTO = new UserDTO(user.getUserId(), user.getName());
+    		userDTOs.add(userDTO);
+    	}
+    	return userDTOs;
+    }
+    
+    // 사용자 정보
+    public UserDTO getUserInfoByUserId(String userId) {
+    	List<User> users = userRepository.findByUserId(userId);
+
+        if (users.isEmpty()) {
+            return null;  // 사용자 정보가 없을 경우 null 반환
+        }
+
+        User user = users.get(0);  // 첫 번째 사용자 정보 반환
+
+        // User 정보를 UserDTO로 변환하여 반환
+        UserDTO userDTO = new UserDTO();
+        userDTO.setUserId(user.getUserId());
+        userDTO.setName(user.getName());
+        userDTO.setEmail(user.getEmail());
+        userDTO.setPhone(user.getPhone());
+        userDTO.setAddress(user.getAddress());
+
+        return userDTO;
     }
 }

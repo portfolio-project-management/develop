@@ -12,12 +12,10 @@ function App() {
         <Routes>
           <Route path='/signin' element={<SignIn></SignIn>}></Route>
           <Route path='/signup/:hash?' element={<SignUp></SignUp>}></Route>
-          <Route path='/pub/rooms' element={<Chat></Chat>} ></Route>
           <Route path='/chat' element={<Chat></Chat>}></Route>
         </Routes>
       </BrowserRouter>
     </div>
   );
 }
-
 export default App;
