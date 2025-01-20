@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { SERVER_URL } from "../Link";
 import AppBarCustom from "./modules/components/AppBarCustom";
 import { useNavigate } from "react-router-dom";
-import { useForm } from "react-final-form";
 import { Button } from "@mui/material";
 
 
@@ -25,7 +24,7 @@ export default function PortfolioBoardEdit(){
     useEffect(()=>{
         if(user !== ""){
             if(user !== "비로그인"){ // 로그인 된 유저라면
-                console.log("들엉홈")
+                //console.log("들엉홈")
                 // 포트폴리오 정보 가져오기
 
                 fetch(SERVER_URL + "portfolioboard/getone?userId=" + user)
@@ -42,7 +41,7 @@ export default function PortfolioBoardEdit(){
                 .catch(error => console.log(error))
 
             }else{
-                console.log("아님")
+                //console.log("아님")
                 alert("로그인 후 이용해 주세요.")
                 navigate("/signin");
             }

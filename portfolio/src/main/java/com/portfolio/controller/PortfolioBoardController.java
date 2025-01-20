@@ -39,6 +39,12 @@ public class PortfolioBoardController {
 		return portfolioBoardService.getPortfolio(userId);
 	}
 	
+	// 조회수 카운터 증가
+	@GetMapping("/addview")
+	public void addView(@RequestParam("userId") String userId) {
+		portfolioBoardService.addView(userId);
+	} 
+	
 //	// 작성했던 포트폴리오 파일(사진) 가져오기 ( 해당 유저 ) - 포폴 가져오기에 통합됨
 //	@GetMapping("/getfiles")
 //	public ResponseEntity<List<String>> getFiles (@RequestParam("userId") String userId){

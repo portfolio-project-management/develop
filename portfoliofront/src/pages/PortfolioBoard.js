@@ -23,7 +23,7 @@ export default function PortfolioBoard() {
         fetch(SERVER_URL + "portfolioboard/get")
         .then(response => response.json())
         .then(data => {
-            console.log(data);
+            //console.log(data);
             setPortfolioList(data);
         })
         .catch(error => console.log(error))
@@ -35,6 +35,10 @@ export default function PortfolioBoard() {
             loginUser : user,
             writerUser : portfolioList[e.currentTarget.dataset.index].userId,
         });
+        
+        //누른 포트폴리오 조회수 증가
+        fetch(SERVER_URL + "portfolioboard/addview?userId=" + portfolioList[e.currentTarget.dataset.index].userId)
+        .catch(error => console.log(error))
         
         setOpen(true);
     }
@@ -59,7 +63,7 @@ export default function PortfolioBoard() {
                 }
                 </div>
             </div>
-            <Dialog open={open} maxWidth="lg" scroll="body">
+            <Dialog open={open} maxWidth="lg" scroll="body" onClose={handleCloseDialog}>
                 {/* <DialogTitle>
                     <p>asdasd</p>
                 </DialogTitle> */}

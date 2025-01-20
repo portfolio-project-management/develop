@@ -38,25 +38,13 @@ public class PortfolioBoardService {
 		return portfolioBoardRepostiory.findAll()
 					.stream()
 					.map((portfolioBoard) -> (new PortfolioBoardListDTO(
+						portfolioBoard.getId(),
 						portfolioBoard.getTitle(),
 						portfolioBoard.getUser().getUserId(),
 						getFile(portfolioBoard.getUser().getUserId())
 					)))
 					.collect(Collectors.toList());
 	}
-	
-	// 모든 포트폴리오 가지고 오기 ( 보류 )
-//		public List<PortfolioBoardListDTO> getPortfolios(){
-//			return portfolioBoardRepostiory.findAll()
-//						.stream()
-//						.map((portfolioBoard) -> (new PortfolioBoardDTO(
-//							portfolioBoard.getId(),portfolioBoard.getTitle(),
-//							portfolioBoard.getView(),portfolioBoard.getUser().getUserId(),
-//							Arrays.asList(portfolioBoard.getPath().split("\\|")),
-//							portfolioBoard.getGoods().size())
-//						))
-//						.collect(Collectors.toList());
-//		}
 	
 	//포트폴리오 한 개 가져오기
 	public PortfolioBoardDTO getPortfolio (String userId) {
@@ -89,6 +77,17 @@ public class PortfolioBoardService {
 		
 	}
 	
+	//조회수 증가
+	public void addView(String userId) {
+		//작성 유저의 포트폴리오 정보 가져오기
+		PortfolioBoard portfolioBoard = portfolioBoardRepostiory.findByUser(userRepository.findByUserId(userId).get(0)).get(0);
+		
+		//1 증가 후 저장
+		portfolioBoard.setView(portfolioBoard.getView()+1);
+		portfolioBoardRepostiory.save(portfolioBoard);
+	}
+	
+	//포트폴리오 저장/수정
 	public String addPortfolio(PortfolioBoardDTO portfolioBoardDTO, List<MultipartFile> files) {
 		
 		

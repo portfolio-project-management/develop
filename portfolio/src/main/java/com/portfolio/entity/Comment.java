@@ -1,5 +1,7 @@
 package com.portfolio.entity;
 
+import java.time.LocalDateTime;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -21,6 +23,7 @@ public class Comment {
 	private int id;
 	
 	private String content;
+	private LocalDateTime createTime;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	private User user;
