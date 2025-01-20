@@ -21,16 +21,12 @@ export default function Portfolio ({dialogInfo}) {
             .then(respones => respones.json())
             .then(data => {
                 setPortfolio(data); 
+                if(data.path){
+                    setFiles(data.path);
+                }
             })
             .catch(error => console.log(error))
 
-        //파일 정보 가져오기
-        fetch(SERVER_URL + "portfolioboard/getfiles?userId=" + dialogInfo.writerUser)
-            .then(respones => respones.json())
-            .then(data => {
-                setFiles(data);
-            })
-            .catch(error => console.log(error))
     },[])
 
     return (

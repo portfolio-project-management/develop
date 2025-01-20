@@ -8,14 +8,15 @@ import { Button } from "@mui/material";
 
 export default function PortfolioBoardEdit(){
     // 파일 저장
-    const [ files, setFiles ] = useState([]);
     const [ portfolio, setPortfolio ] = useState({
         id:0,
         title:"sdasd",
         view:0,
         userId:"",
+        path:[],
         goods:0,
     });
+    const [ files, setFiles ] = useState([]);
     const [ user, setUser ] = useState("");
 
     const navigate = useNavigate();
@@ -26,7 +27,6 @@ export default function PortfolioBoardEdit(){
             if(user !== "비로그인"){ // 로그인 된 유저라면
                 console.log("들엉홈")
                 // 포트폴리오 정보 가져오기
-                let path = [];
 
                 fetch(SERVER_URL + "portfolioboard/getone?userId=" + user)
                 .then(respones => respones.json())
@@ -35,17 +35,12 @@ export default function PortfolioBoardEdit(){
                         ...data,
                         userId:user
                     });
+                    if(data.path){
+                        setFiles(data.path);
+                    }
                 })
                 .catch(error => console.log(error))
 
-                //파일 정보 가져오기
-                fetch(SERVER_URL + "portfolioboard/getfiles?userId=" + user)
-                .then(respones => respones.json())
-                .then(data => {
-                    setFiles(data);
-                    console.log(data)
-                })
-                .catch(error => console.log(error))
             }else{
                 console.log("아님")
                 alert("로그인 후 이용해 주세요.")
@@ -175,7 +170,8 @@ export default function PortfolioBoardEdit(){
             <AppBarCustom  setUser={setUser}></AppBarCustom>
             <button onClick={handleSavePortfolio}>파일 업로드</button>
             <button onClick={handleAddfile}>파일 업로드 자리 늘리기</button>
-            {files.map((file,index)=>(
+            { files &&
+            files.map((file,index)=>(
                 <div>
                     <input 
                         type="file" 

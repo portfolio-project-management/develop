@@ -77,7 +77,8 @@ public class PortfolioBoardService {
 					portfolioBoard.getTitle(),
 					portfolioBoard.getView(),
 					portfolioBoard.getUser().getUserId(),
-					Arrays.asList(portfolioBoard.getPath().split("\\|")),
+//					Arrays.asList(portfolioBoard.getPath().split("\\|")),
+					getFiles(portfolioBoard.getUser().getUserId()),
 					portfolioBoard.getGoods().size()	
 			);
 		}

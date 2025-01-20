@@ -26,8 +26,6 @@ public class PortfolioBoardController {
 
 	@Autowired
 	PortfolioBoardService portfolioBoardService;
-
-	// 데이터베이스에 파일 위치 저장하는데, 코드상에선 해당 데이터가 필요없음 ( 경로를 하드 코딩으로 지정함 ) - 수정하거나 회의 필요
 	
 	// 전체 포트폴리오 가져오기 ( 제목, 사진(메인), 유저 - 리스트로 보여줄 것들 )
 	@GetMapping("/get")
@@ -41,11 +39,11 @@ public class PortfolioBoardController {
 		return portfolioBoardService.getPortfolio(userId);
 	}
 	
-	// 작성했던 포트폴리오 파일(사진) 가져오기 ( 해당 유저 )
-	@GetMapping("/getfiles")
-	public ResponseEntity<List<String>> getFiles (@RequestParam("userId") String userId){
-		return ResponseEntity.ok(portfolioBoardService.getFiles(userId));
-	}
+//	// 작성했던 포트폴리오 파일(사진) 가져오기 ( 해당 유저 ) - 포폴 가져오기에 통합됨
+//	@GetMapping("/getfiles")
+//	public ResponseEntity<List<String>> getFiles (@RequestParam("userId") String userId){
+//		return ResponseEntity.ok(portfolioBoardService.getFiles(userId));
+//	}
 	
 	// 작성/수정 사항 저장
 	@PostMapping("/add")
