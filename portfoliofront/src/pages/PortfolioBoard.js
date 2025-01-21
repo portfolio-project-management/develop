@@ -21,7 +21,7 @@ export default function PortfolioBoard() {
         fetch(SERVER_URL + "portfolioboard/get")
         .then(response => response.json())
         .then(data => {
-            //console.log(data);
+            // console.log(data);
             setPortfolioList(data);
         })
         .catch(error => console.log(error))

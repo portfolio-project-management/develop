@@ -76,7 +76,7 @@
 
 .portfolioBoard_List_div{
   display: flex;
-  width: 1600px;
+  width: 2200px;
   gap: 45px;
   flex-wrap: wrap;
   margin-top: 50px;
@@ -136,4 +136,9 @@
 /* 카카오 버튼 */
 .kakao_button:hover{
   cursor: pointer;
+}
+
+/* 왼쪽 토글바 */
+.MuiDrawer-paper{
+  margin-top: 70px;
 }
