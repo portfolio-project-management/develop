@@ -41,7 +41,9 @@ public class PortfolioBoardService {
 						portfolioBoard.getId(),
 						portfolioBoard.getTitle(),
 						portfolioBoard.getUser().getUserId(),
-						getFile(portfolioBoard.getUser().getUserId())
+						getFile(portfolioBoard.getUser().getUserId()),
+						portfolioBoard.getGoods().size(),
+						portfolioBoard.getView()
 					)))
 					.collect(Collectors.toList());
 	}

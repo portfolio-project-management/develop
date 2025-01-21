@@ -69,17 +69,31 @@
 }
 
 /* 포트폴리오 게시판 스타일 */
-.portfolioBoardStyle{
+.portfolioBoard_div{
   display: flex;
   justify-content: center;
 }
 
-.portfolioBoardListStyle{
+.portfolioBoard_List_div{
   display: flex;
   width: 1600px;
   gap: 45px;
   flex-wrap: wrap;
   margin-top: 50px;
+}
+
+.portfolioBoard_ListInfo_div{
+  display: flex;
+  gap: 20px;
+  width: 500px;
+}
+
+.portfolioBoard_ListInfoFirst_div{
+  width:400px;
+}
+
+.portfolioBoard_ListInfoSecond_div{
+  width:70px;
 }
 
 .portfolio{
