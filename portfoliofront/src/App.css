@@ -40,6 +40,34 @@
 
 /* ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ */
 
+/* 포트폴리오 수정 스타일*/
+.portfolioBoard_Edit_div{
+  display: flex;
+  justify-content: center;
+}
+
+.portfolioBoard_EditSub_div{
+  margin: 30px;
+  padding: 30px;
+  width: 1400px;
+  border: 1px solid black;  
+}
+
+.portfolioBoard_EditImgInput_div{
+  margin-top: 30px;
+}
+
+.portfolioBoard_EditButton_div{
+  margin-top: 50px;
+  display: flex;
+  justify-self: right;
+  flex-direction: column;
+}
+
+.portfolioBoard_EditButton_div button{
+  margin-top: 30px;
+}
+
 /* 포트폴리오 게시판 스타일 */
 .portfolioBoardStyle{
   display: flex;

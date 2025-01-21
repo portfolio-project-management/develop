@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { SERVER_URL } from "../Link";
 import AppBarCustom from "./modules/components/AppBarCustom";
 import { useNavigate } from "react-router-dom";
-import { Button } from "@mui/material";
+import { Button, TextField } from "@mui/material";
 
 
 export default function PortfolioBoardEdit(){
@@ -94,7 +94,6 @@ export default function PortfolioBoardEdit(){
 
             // Base64 문자열로 변환된 파일을 재 변환
             files.forEach((fileBase64, index) => {
-                console.log(fileBase64);
                 if(fileBase64 !== ""){ // 사진이 없는 배열은 무시
 
                     // 정상적인 파일 수 확인
@@ -120,7 +119,10 @@ export default function PortfolioBoardEdit(){
             })
             .then(respones => respones.text())
             .then(data => {
-                console.log(data);
+                alert(data)
+                if(data === "저장성공"){
+                    navigate("/")
+                }
             })
             .catch(error => console.log(error))
 
@@ -174,29 +176,45 @@ export default function PortfolioBoardEdit(){
     return(
         <div>
             <AppBarCustom  setUser={setUser}></AppBarCustom>
-            <button onClick={handleSavePortfolio}>파일 업로드</button>
-            <button onClick={handleAddfile}>파일 업로드 자리 늘리기</button>
-            <input placeholder="제목작성" onChange={handleChangeTitle} value={portfolio.title}></input>
-            { files &&
-            files.map((file,index)=>(
-                <div>
-                    <input 
-                        type="file" 
-                        name={index} 
-                        onChange={(e) => handleUploadFiles(e, index)} 
-                        onDrop={(e) => handleUploadFiles(e, index)}  
-                        style={{
-                            backgroundImage: file ? `url(data:image/jpeg;base64,${file})` : 'none',
-                            backgroundSize: 'cover', // 배경 이미지 크기 조정
-                            backgroundPosition: 'center', // 배경 이미지 위치 설정
-                            width: '1100px',
-                            height: '800px',
-                            border: '1px solid #ccc', // 스타일 추가 (선택사항)
-                    }}></input>
-                    <Button color="warning" name={index} onClick={handleDeleteFile}>삭제</Button>
-                    {/* <img src={`data:image/jpeg;base64,${file}`} width={700} height={500}></img> */}
+            
+            <div className="portfolioBoard_Edit_div">
+                <div className="portfolioBoard_EditSub_div"> 
+                    <TextField
+                        label="제목"
+                        fullWidth
+                        margin="normal"
+                        name='title'
+                        type="text"
+                        value={portfolio.title}  // `user.name`을 직접 사용
+                        onChange={handleChangeTitle}  // 상태 업데이트 함수 사용
+                    />
+
+                    { files &&
+                    files.map((file,index)=>(
+                        <div className="portfolioBoard_EditImgInput_div">
+                            <input 
+                                type="file" 
+                                name={index} 
+                                onChange={(e) => handleUploadFiles(e, index)} 
+                                onDrop={(e) => handleUploadFiles(e, index)}  
+                                style={{
+                                    backgroundImage: file ? `url(data:image/jpeg;base64,${file})` : 'none',
+                                    backgroundSize: 'cover', // 배경 이미지 크기 조정
+                                    backgroundPosition: 'center', // 배경 이미지 위치 설정
+                                    width: '1100px',
+                                    height: '600px',
+                                    border: '1px solid #ccc', // 스타일 추가 (선택사항)
+                            }}></input>
+                            <Button color="warning" name={index} onClick={handleDeleteFile}>삭제</Button>
+                            {/* <img src={`data:image/jpeg;base64,${file}`} width={700} height={500}></img> */}
+                        </div>
+                    ))}
+                    <div className="portfolioBoard_EditButton_div">
+                        <Button variant="outlined" onClick={handleAddfile}>파일 업로드 자리 늘리기</Button>
+                        <Button variant="contained" color="success" onClick={handleSavePortfolio}>포트폴리오 저장</Button>
+                    </div>
                 </div>
-            ))}
+            </div>
         </div>
     );
 }

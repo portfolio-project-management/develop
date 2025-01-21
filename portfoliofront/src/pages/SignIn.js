@@ -144,9 +144,20 @@ function SignIn() {
                 {submitting || sent ? 'In progress…' : '로그인'}
                 
               </FormButton>
-              <img src='/static/images/kakao_login.png' onClick={handleOnLoginToKakao} className='kakao_button'></img>
-              {/* <ButtonBaseDemo onClick={handleOnLoginToKakao}>
-              </ButtonBaseDemo> */}
+
+              <FormButton
+                sx={{ mt: 3, mb: 2 }}
+                disabled={submitting || sent}
+                size="large"
+                fullWidth
+                onClick={handleOnLoginToKakao}
+                style={{
+                  backgroundImage:"url(/static/images/kakao_login.png)",
+                  borderRadius:11,
+                  height:60
+                }}
+              > 
+              </FormButton>
             </Box>
           )}
         </Form>
