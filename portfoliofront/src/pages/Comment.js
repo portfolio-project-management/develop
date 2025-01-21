@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { SERVER_URL } from "../Link";
-import { Button } from "@mui/material";
+import { Button, TextField } from "@mui/material";
+import { grey } from "@mui/material/colors";
 
 export default function Comment({portfolio, loginUser}) {
 
@@ -89,17 +90,30 @@ export default function Comment({portfolio, loginUser}) {
     }
 
     return(
-        <div>
-            <input placeholder={loginUser === "비로그인" ? "로그인 후 이용해 주세요" : "댓글작성"} onChange={handleWriteComment} value={sendCommentContent}></input>
-            <Button color="info" onClick={handleSendComment}>전송</Button>
+        <div className="comment_div">
+            <div className="sendcomment_div">
+                <div className="sendcommenttext_div">
+                    <TextField 
+                        id="outlined-basic" 
+                        label={loginUser === "비로그인" ? "로그인 후 이용해 주세요" : "댓글작성"} 
+                        variant="outlined" 
+                        onChange={handleWriteComment} 
+                        value={sendCommentContent}
+                        fullWidth
+                    />
+                </div>
+                <Button variant="outlined" color="info" onClick={handleSendComment}>전송</Button>
+            </div>
+            
             <hr></hr>
 
             {comments &&
                 comments.map((comment, index) => (
-                    <div key={index}>
-                        <p>작성자 : {comment.userId}</p>
-                        <p>작성 시간 : {(String)(comment.createTime).substring(0,10)}</p>
-                        <p>내용 : {comment.content}</p>
+                    <div key={index} className="commentsread_div">
+                        <div className="commentsreadinfo_div">
+                            <p style={{fontWeight:"bolder"}}>{comment.userId} <span style={{color:"rgb(201, 201, 201)"}}> - {(String)(comment.createTime).substring(0,10)} </span></p>
+                            <p>{comment.content}</p>
+                        </div>
                         {
                             comment.userId === loginUser ? 
                             <Button color="error" name={index} onClick={handleDeleteComment}>삭제</Button>

@@ -9,7 +9,7 @@ export default function PortfolioBoardEdit(){
     // 파일 저장
     const [ portfolio, setPortfolio ] = useState({
         id:0,
-        title:"sdasd",
+        title:"",
         view:0,
         userId:"",
         path:[],
@@ -164,11 +164,19 @@ export default function PortfolioBoardEdit(){
         setFiles(copyFiles);
     }
 
+    function handleChangeTitle(e){
+        setPortfolio({
+            ...portfolio,
+            title:e.target.value,
+        })
+    }
+
     return(
         <div>
             <AppBarCustom  setUser={setUser}></AppBarCustom>
             <button onClick={handleSavePortfolio}>파일 업로드</button>
             <button onClick={handleAddfile}>파일 업로드 자리 늘리기</button>
+            <input placeholder="제목작성" onChange={handleChangeTitle} value={portfolio.title}></input>
             { files &&
             files.map((file,index)=>(
                 <div>

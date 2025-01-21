@@ -24,10 +24,10 @@ public class User {
 	@Column(nullable = false)
 	private String name;
 	
-	@Column(nullable = false)
+	@Column(nullable = false, unique=true)
 	private String email;
 	
-	@Column(nullable = false)
+	@Column(nullable = false, unique=true)
 	private String userId;
 	
 	@Column(nullable = false)
@@ -39,11 +39,6 @@ public class User {
 	@Column(nullable = false)
 	private String address;
 	
-//	
-//	// 추가사항 ( 조인 )
-//	@OneToMany(cascade=CascadeType.ALL, mappedBy="user")
-//	private List<Img> imgs;
-//	
 	@OneToMany(cascade=CascadeType.ALL, mappedBy="user")
 	private List<Good> goods;
 	

@@ -53,11 +53,17 @@ function SignUp() {
   
     React.useEffect(() => {
       if(params.hash !== undefined){ // 해시 파라미터가 존재할 때
-        fetch(SERVER_URL + "user/checkemail?hash=" + params.hash)
+        fetch(SERVER_URL + "user/checkemail?hash=" + params.hash,{
+          method:"GET",
+          credentials: "include",
+        })
         .then(response => response.text())
         .then(data => {
-            if(data === "정보없음"){
-                // 정상진행
+            if(data === "로그인"){
+                // 이미 회원가입 된 유저 ( 쿠키, 세션발급된 상태 ) -> 메인으로 이동
+                navigate("/");
+            }else if (data === "정보없음"){
+                // 이메일 일증 없이 정상진행
             }else{
                 setUser({
                     ...user,
@@ -68,7 +74,7 @@ function SignUp() {
         })
         .catch(error => console.log(error))
       }
-    });
+    },[]);
 
   const handleSubmit = () => {
     setSent(true);

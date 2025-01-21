@@ -56,8 +56,8 @@ export default function PortfolioBoard() {
                     portfolioList.map((portfolio,index) => (
                         <div key={index} className='portfolio' data-index={index} onClick={handleOpenDialog}>
                             <img src={`data:image/jpeg;base64,${portfolio.mainFile}`} alt="메인 이미지" width={500} height={312}></img>
-                            <p>제목 : {portfolio.title}</p>
-                            <p>작성자 : {portfolio.userId}</p>
+                            <p style={{fontSize:25, fontWeight:"bold", margin:0, marginLeft:20}}>{portfolio.title}</p>
+                            <p style={{margin:20}}>{portfolio.userId}</p>
                         </div>
                     ))
                 }

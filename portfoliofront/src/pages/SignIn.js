@@ -60,7 +60,9 @@ function SignIn() {
         ...user,
         passWord:"",
       })
-      navigate("/");
+      if(data === "로그인"){
+        navigate("/");
+      }
     })
     .catch(error => console.log(error));
   }
@@ -72,11 +74,9 @@ function SignIn() {
     })
   }
 
+  // 카카오 인증 요청
   function handleOnLoginToKakao() {
-    fetch(KAKAO_URL + "response_type=code&client_id=" + REST_API_KEY + "&redirect_uri=" + SERVER_URL + "user/signin/kakao")
-    .then(response => response.text())
-    .then(data => console.log(data))
-    .catch(error => console.log(error))
+    window.location.href = KAKAO_URL;
   }
 
   return (
@@ -144,8 +144,9 @@ function SignIn() {
                 {submitting || sent ? 'In progress…' : '로그인'}
                 
               </FormButton>
-              <ButtonBaseDemo onClick={handleOnLoginToKakao}>
-              </ButtonBaseDemo>
+              <img src='/static/images/kakao_login.png' onClick={handleOnLoginToKakao} className='kakao_button'></img>
+              {/* <ButtonBaseDemo onClick={handleOnLoginToKakao}>
+              </ButtonBaseDemo> */}
             </Box>
           )}
         </Form>

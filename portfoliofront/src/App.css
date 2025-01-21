@@ -36,3 +36,62 @@
     transform: rotate(360deg);
   }
 }
+
+
+/* ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ */
+
+/* 포트폴리오 게시판 스타일 */
+.portfolioBoardStyle{
+  display: flex;
+  justify-content: center;
+}
+
+.portfolioBoardListStyle{
+  display: flex;
+  width: 1600px;
+  gap: 45px;
+  flex-wrap: wrap;
+  margin-top: 50px;
+}
+
+.portfolio{
+  border-radius: 20px;
+  text-align: left;
+}
+
+.portfolio img{
+  border-radius: 20px;
+}
+
+.portfolio:hover{
+  box-shadow: 0px 0px 10px black;
+}
+
+/* 댓글 작성 스타일 */
+.comment_div button{
+  height: 56px;
+}
+
+.sendcomment_div{
+  display: flex;
+}
+
+.sendcommenttext_div{
+  width: 95%;
+}
+
+/* 댓글 스타일 */
+.commentsread_div{
+  margin-top: 20px;
+  margin-bottom: 20px;
+  display: flex;
+}
+
+.commentsreadinfo_div{
+  width: 90%;
+}
+
+/* 카카오 버튼 */
+.kakao_button:hover{
+  cursor: pointer;
+}
