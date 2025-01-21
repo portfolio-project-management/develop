@@ -42,7 +42,7 @@ public class UserController {
 		return userService.userLogin(userDTO);	
 	}
 	
-	// 쿠키 / 세션 확인
+	// 쿠키 / 세션 확인 
 	@PostMapping("/checkcookie")
 	public String checkCookie(HttpServletRequest request) {
 		return sessionManager.findCookie(request.getCookies());

@@ -8,7 +8,7 @@ import lombok.ToString;
 @Setter
 @ToString
 public class RoomDTO {
-	private long roomId;
+	private Long roomId;
 	private String roomName;
 	
 	public RoomDTO(long roomId, String roomName) {

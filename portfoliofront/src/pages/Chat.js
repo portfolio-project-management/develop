@@ -23,7 +23,6 @@ export default function Chat() {
 						return response.json();
 					})
 					.then(data => {
-						console.log("서버로부터 받은 데이터:", data);
 						setUserData(data);  // 서버로부터 받은 사용자 데이터를 상태에 저장
 						// 사용자가 속한 채팅방 정보 가져오기
 						fetch(SERVER_URL + "chat/user/" + data.userId + "/rooms")
@@ -53,6 +52,11 @@ export default function Chat() {
 			}
 		}
 	}, [user]); // user 상태가 변경될 때마다 실행됨
+
+	// 채팅방 페이지 이동
+	const handleEnterRoom = (roomName) => {
+		navigate(`/chat/room/${roomName}`);
+	};
 	
 	
 	return (
@@ -71,7 +75,12 @@ export default function Chat() {
             ) : (
               <ul>
                 {rooms.map((room, index) => (
-                  <li key={index}>{room.roomName}</li> // 예시로 roomName을 출력
+                  <li key={index}>
+										{room.roomName}
+									  <button onClick={() => handleEnterRoom(room.roomName)}>
+                      입장
+                    </button>
+									</li> 
                 ))}
               </ul>
             )}

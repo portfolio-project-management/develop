@@ -5,6 +5,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.handler.annotation.DestinationVariable;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.Payload;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,15 +18,26 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.portfolio.dto.RoomDTO;
 import com.portfolio.dto.UserDTO;
+import com.portfolio.entity.Room;
+import com.portfolio.entity.User;
 import com.portfolio.service.ChatService;
+import com.portfolio.service.UserService;
 
 @RestController
 @RequestMapping("/chat")
 @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
 public class ChatController {
-	 @Autowired
-	    private ChatService chatService;
+	 	
+	    UserService userService;
+	    ChatService chatService;
+	    
+	    public ChatController( UserService userService, ChatService chatService) {
 
+	        this.userService = userService;
+	        this.chatService = chatService;
+	    }
+	    
+	    
 	    // 채팅방에 대한 사용자 정보 조회
 	    @GetMapping("/user")
 	    public ResponseEntity<UserDTO> getUserInfoForChat(@RequestParam("userId") String userId) {
@@ -44,4 +59,6 @@ public class ChatController {
 	        List<RoomDTO> rooms = chatService.getRoomsByUserId(userId);
 	        return ResponseEntity.ok(rooms);
 	    }
-}
+	    
+	    
+	}

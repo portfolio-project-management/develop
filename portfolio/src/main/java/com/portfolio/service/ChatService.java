@@ -1,6 +1,5 @@
 package com.portfolio.service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -31,5 +30,9 @@ public class ChatService {
 	        return rooms.stream()
                     .map(room -> new RoomDTO(room.getRoomId(), room.getRoomName()))
                     .collect(Collectors.toList());
+	    }
+	    
+	    public Room findById(long roomId) {
+	    	return roomRepository.findById(roomId);
 	    }
 }

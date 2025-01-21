@@ -239,4 +239,8 @@ public class UserService {
 
         return userDTO;
     }
+    
+    public User findByName(String name) {
+    	return userRepository.findByName(name);
+    }
 }
