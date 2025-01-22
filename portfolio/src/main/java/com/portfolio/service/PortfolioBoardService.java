@@ -6,13 +6,16 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Base64;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -33,20 +36,44 @@ public class PortfolioBoardService {
 	UserRepository userRepository;
 	
 	
-	// 모든 포트폴리오 가지고 오기
-	public List<PortfolioBoardListDTO> getPortfolios(){
-		return portfolioBoardRepostiory.findAll()
-					.stream()
-					.map((portfolioBoard) -> (new PortfolioBoardListDTO(
-						portfolioBoard.getId(),
-						portfolioBoard.getTitle(),
-						portfolioBoard.getUser().getUserId(),
-						getFile(portfolioBoard.getUser().getUserId()),
-						portfolioBoard.getGoods().size(),
-						portfolioBoard.getView()
-					)))
-					.collect(Collectors.toList());
+//	// 모든 포트폴리오 가지고 오기
+//	public List<PortfolioBoardListDTO> getPortfolios(){
+//		return portfolioBoardRepostiory.findAll()
+//					.stream()
+//					.map((portfolioBoard) -> (new PortfolioBoardListDTO(
+//						portfolioBoard.getId(),
+//						portfolioBoard.getTitle(),
+//						portfolioBoard.getUser().getUserId(),
+//						getFile(portfolioBoard.getUser().getUserId()),
+//						portfolioBoard.getGoods().size(),
+//						portfolioBoard.getView()
+//					)))
+//					.collect(Collectors.toList());
+//	}
+	
+	// 페이징 기법을 통한 일정 양의 포폴 가져오기
+	public List<PortfolioBoardListDTO> getPortfolios(int page) {
+		//항상 20개씩 -- 재수정
+        Pageable pageable = PageRequest.of(page, 20);
+        Page<PortfolioBoard> boardPage = portfolioBoardRepostiory.findBySomePageOrderById(pageable);	
+        return boardPage
+				.stream()
+				.map((portfolioBoard) -> (new PortfolioBoardListDTO(
+					portfolioBoard.getId(),
+					portfolioBoard.getTitle(),
+					portfolioBoard.getUser().getUserId(),
+					getFile(portfolioBoard.getUser().getUserId()),
+					portfolioBoard.getGoods().size(),
+					portfolioBoard.getView()
+				)))
+				.collect(Collectors.toList());
 	}
+	
+	//총 데이터 개수 가져오기
+	public long getCountPage() {
+		return portfolioBoardRepostiory.count();
+	}
+	
 	
 	//포트폴리오 한 개 가져오기
 	public PortfolioBoardDTO getPortfolio (String userId) {

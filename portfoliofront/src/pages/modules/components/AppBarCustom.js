@@ -95,7 +95,7 @@ export default function AppBarCustom({ setUser = () => {} }) {
 
     return (
         <AppBar position="static" sx={{ bgcolor: 'black', display: 'flex', flexDirection: 'row' }}>
-            <Toolbar sx={{ display: 'flex', flex: 1 }}>
+            <Toolbar sx={{ display: 'flex', flex: 1 }}> 
                 {/* 메뉴 버튼 - Drawer 열기 */}
                 <Typography variant="h6" sx={{ textAlign: 'left', flexGrow: 1, color:'white'}}>
                     <Button onClick={toggleDrawer} color="inherit">{open ? "X" : "메뉴"}</Button>

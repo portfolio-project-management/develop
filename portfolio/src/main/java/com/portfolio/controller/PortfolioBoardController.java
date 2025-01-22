@@ -27,10 +27,21 @@ public class PortfolioBoardController {
 	@Autowired
 	PortfolioBoardService portfolioBoardService;
 	
-	// 전체 포트폴리오 가져오기 ( 제목, 사진(메인), 유저 - 리스트로 보여줄 것들 )
+//	// 전체 포트폴리오 가져오기 ( 제목, 사진(메인), 유저 - 리스트로 보여줄 것들 )
+//	@GetMapping("/get")
+//	public List<PortfolioBoardListDTO> getPortfolios(){
+//		return portfolioBoardService.getPortfolios();
+//	}
+	
+	// 전체 포트폴리오 가져오기 (일정 페이지) ( 제목, 사진(메인), 유저 - 리스트로 보여줄 것들 )
 	@GetMapping("/get")
-	public List<PortfolioBoardListDTO> getPortfolios(){
-		return portfolioBoardService.getPortfolios();
+	public List<PortfolioBoardListDTO> getPortfolios(@RequestParam("page") int page){
+		return portfolioBoardService.getPortfolios(page);
+	}
+	
+	@GetMapping("/countpage")
+	public long getCountPage() {
+		return portfolioBoardService.getCountPage();
 	}
 		
 	// 작성했던 포트폴리오 가져오기 ( 해당 유저 )

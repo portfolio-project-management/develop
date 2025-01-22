@@ -1,14 +1,22 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { SERVER_URL } from "../Link";
 import AppBarCustom from "./modules/components/AppBarCustom";
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
 import Portfolio from './Portfolio';
+import { useResolvedPath } from "react-router-dom";
 
 export default function PortfolioBoard() {
 
-    const [ portfolioList, setPortfolioList ] = useState([{}]);
+    const [ portfolioList, setPortfolioList ] = useState([]);
     const [ user, setUser ] = useState("");
     const [ open, setOpen ] = useState(false);
+    const ref = useRef(null);
+    const [ page, setPage ] = useState(0);
+
+    //총 페이지(객체 수) 저장
+    const [ maxPage, setMaxPage ] = useState(-100);
+
+    const [ bg, setBg ] = useState(true);
 
     // 팝업에서 필요한 로그인한 사람 , 작성한 사람 userId
     const [ dialogInfo, setDialogInfo ] = useState({
@@ -16,16 +24,68 @@ export default function PortfolioBoard() {
         writerUser : "",
     }); 
 
+    // 페이징 기법을 위한 observer 구현
     useEffect(() => {
-        // 모든 포트폴리오 제목, 유저, 사진 가져오기
-        fetch(SERVER_URL + "portfolioboard/get")
-        .then(response => response.json())
+        //페이징 기법의 종료 지점 확인을 위한 데이터베이스 총 데이터 개수 확인
+        fetch(SERVER_URL + "portfolioboard/countpage")
+        .then(response => response.text())
         .then(data => {
-            // console.log(data);
-            setPortfolioList(data);
+            
+            //정상적인 응답일 때 페이지 수 저장 (기존에 로드된 데이터 수 만큼 제거)
+            setMaxPage((Number)(data)-20);
+            
         })
         .catch(error => console.log(error))
     },[])
+
+    useEffect(() => {
+        //console.log(maxPage,"최고 페이지")
+
+        //탐지 객체 생성
+        if(maxPage !== -100 && maxPage > 20){
+            let maxPageLet = maxPage
+
+            const observe = new IntersectionObserver(entries => {
+                if(entries[0].isIntersecting){ 
+                    if(maxPageLet > 0){
+                        maxPageLet -= 20;
+
+                        //20개씩 객체 가져오기
+                        setPage(prevTest => (prevTest+1));
+
+                    }else{
+                        // 마지막 페이지일 시 문구 띄우고, 배경 삭제, 추적 해제
+                        alert("마지막 페이지 입니다.")
+                        setBg(false)
+                        observe.unobserve(ref.current);
+                    }
+                }
+            }, { threshold : 1 });
+
+            //탐지할 객체 지정
+            observe.observe(ref.current);
+
+            //이전 탐지 객체 해제
+            return() => {
+                if(ref.current){
+                    observe.unobserve(ref.current);
+                }
+            }
+        }else{
+            setBg(false)
+        }
+    },[maxPage])
+
+    useEffect(() => {
+        // 각 페이지 가져오기
+        fetch(SERVER_URL + "portfolioboard/get?page=" + page)
+        .then(response => response.json())
+        .then(data => {
+            //console.log(data);
+            setPortfolioList(prevTest => ([...prevTest,...data]));
+        })
+        .catch(error => console.log(error))
+    },[page])
 
     function handleOpenDialog(e) {
         //팝업창을 열고 해당 포트폴리오 특정
@@ -75,7 +135,17 @@ export default function PortfolioBoard() {
                     ))
                 }
                 </div>
-            </div>
+            </div>  
+            {/* 다음 페이지를 띄우기 위한 추적되는 태그 생성 */}
+            <div ref={ref} 
+                style={{
+                    height: 300, 
+                    backgroundImage: `url(${bg ? "/static/images/loading.gif" : ""})`,
+                    backgroundSize: 'contain',    // 이미지가 영역에 맞게 크기 조정
+                    backgroundPosition: 'center', // 이미지가 중앙에 위치하도록 설정
+                    backgroundRepeat: 'no-repeat', // 이미지가 반복되지 않도록 설정
+                }}></div>
+
             <Dialog open={open} maxWidth="lg" scroll="body" onClose={handleCloseDialog}>
                 {/* <DialogTitle>
                     <p>asdasd</p>
