@@ -199,6 +199,8 @@ public class UserService {
     	user.setEmail(userDTO.getEmail());
     	user.setName(userDTO.getName());
     	user.setId(UUID.randomUUID().toString());
+    	user.setPhone(userDTO.getPhone());
+    	user.setAddress(userDTO.getAddress());
     	
     	//데이터베이스 저장 ( 결과 반환 )
     	return userRepository.save(user) == null? "실패" : "성공";

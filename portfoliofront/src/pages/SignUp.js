@@ -1,13 +1,12 @@
+
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
-import { Field, Form, FormSpy } from 'react-final-form';
+import { Form, FormSpy } from 'react-final-form';
 import Typography from './modules/components/Typography';
 import AppFooter from './modules/views/AppFooter';
-import AppAppBar from './modules/views/AppAppBar';
 import AppForm from './modules/views/AppForm';
 import { email, required } from './modules/form/validation';
-import RFTextField from './modules/form/RFTextField';
 import FormButton from './modules/form/FormButton';
 import FormFeedback from './modules/form/FormFeedback';
 import withRoot from './modules/withRoot';
@@ -25,7 +24,9 @@ function SignUp() {
     passWordCheck:"",
     email:"",
     emailCheck:false,
-    name:""
+    name:"",
+    phone:"",
+    address:""
   })
 
   const navigate = useNavigate();
@@ -38,7 +39,7 @@ function SignUp() {
   const params = useParams();
 
   const validate = (values) => {
-    const errors = required(['firstName', 'lastName', 'email', 'password'], values);
+    const errors = required(['name','userId','passWord','passWordCheck','phone','address', 'email'], values);
 
     if (!errors.email) {
       const emailError = email(values.email);
@@ -68,7 +69,7 @@ function SignUp() {
         })
         .catch(error => console.log(error))
       }
-    });
+    },[]);
 
   const handleSubmit = () => {
     setSent(true);
@@ -90,6 +91,10 @@ function SignUp() {
         alert("비밀번호를 입력해 주세요");
     }else if(user.passWord !== user.passWordCheck){
         alert("비밀번호와 비밀번호 확인이 다릅니다");
+    }else if(user.phone === ""){
+      alert("폰번호를 입력해 주세요");
+    }else if(user.address === ""){
+      alert("주소를 입력해 주세요");
     }else if(user.emailCheck !== true){
         alert("이메일 인증을 진행해 주세요");
     }else{
@@ -111,7 +116,9 @@ function SignUp() {
                   passWordCheck:"",
                   email:"",
                   emailCheck:false,
-                  name:""
+                  name:"",
+                  phone:"",
+                  address:""
               });
             }
         })
@@ -241,6 +248,28 @@ function SignUp() {
                 name='passWordCheck'
                 type="password"
                 value={user.passWordCheck}  // `user.name`을 직접 사용
+                onChange={handleOnChange}  // 상태 업데이트 함수 사용
+                disabled={submitting || sent}
+              />
+
+              <TextField
+                label="phone"
+                fullWidth
+                margin="normal"
+                name='phone'
+                type="text"
+                value={user.phone}  // `user.name`을 직접 사용
+                onChange={handleOnChange}  // 상태 업데이트 함수 사용
+                disabled={submitting || sent}
+              />
+
+              <TextField
+                label="address"
+                fullWidth
+                margin="normal"
+                name='address'
+                type="text"
+                value={user.address}  // `user.name`을 직접 사용
                 onChange={handleOnChange}  // 상태 업데이트 함수 사용
                 disabled={submitting || sent}
               />

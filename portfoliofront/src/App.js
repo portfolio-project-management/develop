@@ -2,6 +2,12 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css';
 import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
+import ResumeEdit from './pages/ResumeEdit';
+import Main from './pages/Main';
+import ResumeView from './pages/ResumeView';
+import ProposalEdit from './pages/ProposalEdit';
+import ProposalView from './pages/ProposalView';
+import ProposalList from './pages/ProposalList';
 
 function App() {
 
@@ -9,8 +15,14 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Routes>
+          <Route path='/' element={<Main></Main>}></Route>
           <Route path='/signin' element={<SignIn></SignIn>}></Route>
           <Route path='/signup/:hash?' element={<SignUp></SignUp>}></Route>
+          <Route path='/resume/view' element={<ResumeView></ResumeView>}></Route>
+          <Route path='/resume/edit'element={<ResumeEdit></ResumeEdit>}></Route>
+          <Route path='/proposal/edit/:proposalId?'element={<ProposalEdit></ProposalEdit>}></Route>
+          <Route path='/proposal/view/:proposalId?'element={<ProposalView></ProposalView>}></Route>
+          <Route path='/proposal/list/:userId?'element={<ProposalList></ProposalList>}></Route>
         </Routes>
       </BrowserRouter>
     </div>

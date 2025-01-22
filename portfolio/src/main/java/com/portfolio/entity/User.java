@@ -29,5 +29,15 @@ public class User {
 	private String userId;
 	
 	@Column(nullable = false)
-	private String passWord; 
+	private String passWord;
+	
+	@Column(nullable = false)
+    private String phone;
+
+    @Column(nullable = false)
+    private String address;
+    
+    
+    
+    
 }
