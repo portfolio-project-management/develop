@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Button, Box, Grid, Card, CardContent, Typography, TextField } from '@mui/material';
 import { SERVER_URL } from "../Link";
@@ -12,28 +12,86 @@ function ProposalList() {
     const [proposals, setProposals] = useState([]);
     const [searchQuery, setSearchQuery] = useState(""); // 검색 쿼리 상태 추가
     const [filteredProposals, setFilteredProposals] = useState([]);
+    const ref = useRef(null);
+    const [ page, setPage ] = useState(0);
+
+    //총 페이지(객체 수) 저장
+    const [ maxPage, setMaxPage ] = useState(-100);
+
+    const [ bg, setBg ] = useState(true);
+
+    // 페이징 기법을 위한 observer 구현
+    useEffect(() => {
+      //페이징 기법의 종료 지점 확인을 위한 데이터베이스 총 데이터 개수 확인
+      fetch(SERVER_URL + "proposal/countpage")
+      .then(response => response.text())
+      .then(data => {
+          //정상적인 응답일 때 페이지 수 저장 (기존에 로드된 데이터 수 만큼 제거)
+          setMaxPage((Number)(data)-15);
+          
+        })
+        .catch(error => console.log(error))
+    },[])
 
     useEffect(() => {
-        fetch(SERVER_URL +  `proposal/list?userId=${params.userId ? params.userId : "없음"}`)
+        // console.log(maxPage,"최고 페이지")
+        
+        //탐지 객체 생성
+        if(maxPage !== -100 && maxPage > 0){
+            let maxPageLet = maxPage
+            const observe = new IntersectionObserver(entries => {
+                if(entries[0].isIntersecting){ 
+                    if(maxPageLet > 0){
+                        maxPageLet -= 15;
+
+                        //20개씩 객체 가져오기
+                        setPage(prevPage => prevPage + 1);
+                    }else{
+                        // 마지막 페이지일 시 문구 띄우고, 배경 삭제, 추적 해제
+                        alert("마지막 페이지 입니다.")
+                        setBg(false)
+                        observe.unobserve(ref.current);
+                    }
+                }
+            }, { threshold : 1 });
+
+            //탐지할 객체 지정
+            observe.observe(ref.current);
+
+            //이전 탐지 객체 해제
+            return() => {
+                if(ref.current){
+                    observe.unobserve(ref.current);
+                }
+            }
+        }else if(maxPage !== -100 && maxPage < 15){
+          setBg(false)
+        }
+      },[maxPage])
+
+    useEffect(() => {
+        fetch(SERVER_URL +  `proposal/list?userId=${params.userId ? params.userId : "없음"}&page=` + page)
             .then((response) => response.json())
             .then((data) => {
-                console.log(data);
-                setProposals(data);
-                setFilteredProposals(data); // 여러 제안서 목록을 상태에 저장
+              if (Array.isArray(data)) {
+                // console.log("Received data is an array:", data);
+                setProposals([...proposals,...data]);  // 배열인 경우 상태에 저장
+                setFilteredProposals([...filteredProposals,...data]); // 필터링된 제안서 목록 업데이트
+              } else {
+                console.error("Received data is not an array:", data);
+              }
             })
             .catch((error) => console.log(error));
-    }, []);
+    }, [page]);
 
     useEffect(() => {
       // 검색 쿼리가 변경될 때마다 필터링
-      console.log("Filtered Proposals:", filteredProposals);
+      // console.log("Filtered Proposals:", filteredProposals);
       if (searchQuery) {
           setFilteredProposals(proposals.filter(proposal => 
               proposal.title.toLowerCase().includes(searchQuery.toLowerCase())
           ));
-          console.log("바뀜")
       } else {
-        console.log("안바뀜")
           setFilteredProposals(proposals); // 검색어가 없으면 모든 제안서를 다시 표시
       }
     }, [searchQuery, proposals])
@@ -61,9 +119,7 @@ function ProposalList() {
             setFilteredProposals(proposals.filter(proposal => 
                 proposal.title.toLowerCase().includes(searchQuery.toLowerCase())
             ));
-            console.log("검색실행")
         } else {
-          console.log("검색실행안됨")
             setFilteredProposals(proposals); // 검색어가 없으면 모든 제안서를 다시 표시
         }
       };
@@ -135,7 +191,7 @@ function ProposalList() {
                   <CardContent>
                     <Typography variant="h6">{proposal.title}</Typography>
                     <Typography variant="body2" color="textSecondary">
-                      제목: {proposal.title}
+                      예상 팀원 수: {proposal.expectedTeamMembers}
                     </Typography>
                     <Typography variant="body2" color="textSecondary">
                       만료 시간: {(String)(proposal.expiredTime).replace("T"," / ")}
@@ -152,6 +208,9 @@ function ProposalList() {
           )}
         </Grid>
         </Box>
+
+        {/* 다음 페이지를 띄우기 위한 추적되는 태그 생성 */}
+        <div><img ref={ref} src={bg ? "/static/images/loading.gif" : ""}></img></div>
       </>
   );
 }
