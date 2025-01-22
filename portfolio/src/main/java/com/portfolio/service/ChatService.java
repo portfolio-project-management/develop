@@ -32,7 +32,4 @@ public class ChatService {
                     .collect(Collectors.toList());
 	    }
 	    
-	    public Room findById(long roomId) {
-	    	return roomRepository.findById(roomId);
-	    }
 }

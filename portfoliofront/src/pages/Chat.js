@@ -54,8 +54,8 @@ export default function Chat() {
 	}, [user]); // user 상태가 변경될 때마다 실행됨
 
 	// 채팅방 페이지 이동
-	const handleEnterRoom = (roomName) => {
-		navigate(`/chat/room/${roomName}`);
+	const handleEnterRoom = (roomId) => {
+		navigate(`/chat/room/${roomId}`);
 	};
 	
 	
@@ -76,8 +76,8 @@ export default function Chat() {
               <ul>
                 {rooms.map((room, index) => (
                   <li key={index}>
-										{room.roomName}
-									  <button onClick={() => handleEnterRoom(room.roomName)}>
+										{room.roomId}
+									  <button onClick={() => handleEnterRoom(room.roomId)}>
                       입장
                     </button>
 									</li> 

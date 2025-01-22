@@ -14,5 +14,4 @@ public interface RoomRepository extends JpaRepository<Room, Long>{
     @Query("SELECT r FROM Room r WHERE r.user.userId = :userId")
     public List<Room> findRoomsByUserId(@Param("userId") String userId);
     
-    public Room findById(long roomId);
 }

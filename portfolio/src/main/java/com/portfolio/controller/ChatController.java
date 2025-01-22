@@ -2,12 +2,9 @@ package com.portfolio.controller;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,8 +21,7 @@ import com.portfolio.service.ChatService;
 import com.portfolio.service.UserService;
 
 @RestController
-@RequestMapping("/chat")
-@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
+@CrossOrigin(origins="http://localhost:3000", allowCredentials = "true")
 public class ChatController {
 	 	
 	    UserService userService;
@@ -39,7 +35,7 @@ public class ChatController {
 	    
 	    
 	    // 채팅방에 대한 사용자 정보 조회
-	    @GetMapping("/user")
+	    @GetMapping("/chat/user")
 	    public ResponseEntity<UserDTO> getUserInfoForChat(@RequestParam("userId") String userId) {
 	        UserDTO userDTO = chatService.getUserInfoForChat(userId);
 
@@ -54,11 +50,35 @@ public class ChatController {
 	    }
 	    
 	    // 사용자가 속한 채팅방 조회
-	    @GetMapping("/user/{userId}/rooms")
+	    @GetMapping("/chat/user/{userId}/rooms")
 	    public ResponseEntity<List<RoomDTO>> getUserRooms(@PathVariable("userId") String userId) {
 	        List<RoomDTO> rooms = chatService.getRoomsByUserId(userId);
 	        return ResponseEntity.ok(rooms);
 	    }
 	    
+	    // 클라이언트에서 /app/chat 요청이 오면 처리
+	    @MessageMapping("/sendMessage")
+	    @SendTo("/topic/messages")  // 모든 클라이언트에게 메시지 전송
+	    public String sendMessage(String message) {
+	        return message;  // 메시지를 모든 구독자에게 보냄
+	    }
+	   
 	    
+	    // info?t=timestamp 형태의 쿼리 파라미터를 처리
+	    @GetMapping("/chat/info")
+	    public String getChatInfo(@RequestParam("t") String timestamp) {
+	        // timestamp 값을 받아서 로직을 처리
+	        System.out.println("Received timestamp: " + timestamp);
+
+	        // 타임스탬프에 맞는 처리 예시
+	        String responseMessage = processTimestamp(timestamp);
+
+	        return responseMessage;  // 처리된 결과 반환
+	    }
+	    
+	    private String processTimestamp(String timestamp) {
+	        // 예시로 타임스탬프를 처리하는 로직을 추가
+	        // 예: 타임스탬프를 기준으로 특정 데이터를 조회하거나 처리
+	        return "Processed info for timestamp: " + timestamp;
+	    }
 	}

@@ -14,7 +14,7 @@ function App() {
           <Route path='/signin' element={<SignIn></SignIn>}></Route>
           <Route path='/signup/:hash?' element={<SignUp></SignUp>}></Route>
           <Route path='/chat' element={<Chat></Chat>}></Route>
-          <Route path="/chat/room/:roomId" element={<ChatPage />} />
+          <Route path='/chat/room/:roomId' element={<ChatPage></ChatPage>}></Route>
         </Routes>
       </BrowserRouter>
     </div>
