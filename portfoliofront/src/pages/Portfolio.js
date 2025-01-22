@@ -6,7 +6,7 @@ import Comment from "./Comment";
 
 // 비 로그인 - 볼 수만 있게
 // 로그인 - 보고, 좋아요, 댓글
-export default function Portfolio ({dialogInfo}) {
+export default function Portfolio ({dialogInfo,clickGood}) {
 
     // 받는 인자 구성 요소
     // dialongInfo{
@@ -44,8 +44,10 @@ export default function Portfolio ({dialogInfo}) {
             .then(data => {
                 //이미 좋아요를 누른 사람
                 if(data === "true"){
+                    //좋아요 감소
                     setGood(true);
                 }else{
+                    // 좋아요 증가
                     setGood(false);
                 }
             })
@@ -64,6 +66,7 @@ export default function Portfolio ({dialogInfo}) {
             fetch(SERVER_URL + `good/${good ? "cancle" : "add"}?userId=` + dialogInfo.loginUser + "&portfolioBoardId=" + portfolio.id)
             .then(respones => {
                 if(respones.ok){
+                    good ? clickGood(false) : clickGood(true);
                     setGood(!good);
                 }
             })

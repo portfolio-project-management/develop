@@ -98,11 +98,30 @@ export default function PortfolioBoard() {
         fetch(SERVER_URL + "portfolioboard/addview?userId=" + portfolioList[e.currentTarget.dataset.index].userId)
         .catch(error => console.log(error))
         
+        const copyPortfolioList = [...portfolioList];
+        copyPortfolioList[e.currentTarget.dataset.index].view++;
+        setPortfolioList(copyPortfolioList);
+
         setOpen(true);
     }
 
     function handleCloseDialog() {
         setOpen(false);
+    }
+
+    //팝업창에서 좋아요 누를 때 실행
+    function clickGood(click) {
+        const copyPortfolioList = [...portfolioList];
+
+        copyPortfolioList.map((portfolio) => {
+            if(portfolio.userId === dialogInfo.writerUser){
+                click ? portfolio.goods++ : portfolio.goods--;
+            }
+            return(portfolio);
+        })
+
+        setPortfolioList(copyPortfolioList);
+
     }
 
     return(
@@ -137,21 +156,14 @@ export default function PortfolioBoard() {
                 </div>
             </div>  
             {/* 다음 페이지를 띄우기 위한 추적되는 태그 생성 */}
-            <div ref={ref} 
-                style={{
-                    height: 300, 
-                    backgroundImage: `url(${bg ? "/static/images/loading.gif" : ""})`,
-                    backgroundSize: 'contain',    // 이미지가 영역에 맞게 크기 조정
-                    backgroundPosition: 'center', // 이미지가 중앙에 위치하도록 설정
-                    backgroundRepeat: 'no-repeat', // 이미지가 반복되지 않도록 설정
-                }}></div>
+            <div><img src={bg ? "/static/images/loading.gif" : ""}></img></div>
 
             <Dialog open={open} maxWidth="lg" scroll="body" onClose={handleCloseDialog}>
                 {/* <DialogTitle>
                     <p>asdasd</p>
                 </DialogTitle> */}
                 <DialogContent>
-                    <Portfolio dialogInfo={dialogInfo}></Portfolio>
+                    <Portfolio dialogInfo={dialogInfo} clickGood={clickGood} ></Portfolio>
                 </DialogContent>
                 <DialogActions>
                     <Button color="warning" onClick={handleCloseDialog}>닫기</Button>
