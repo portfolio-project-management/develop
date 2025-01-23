@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { SERVER_URL } from "../Link";
 import AppBarCustom from "./modules/components/AppBarCustom";
 import { useNavigate } from "react-router-dom";
-import {  Grid, TextField, Box, Button, Container, Typography  } from "@mui/material";
+import { Grid, TextField, Box, Button, Container, Typography } from "@mui/material";
 
 function ResumeEdit() {
   const navigate = useNavigate();
@@ -148,7 +148,7 @@ function ResumeEdit() {
           {/* 경력 및 자격증 그룹 */}
           <Box sx={{ marginBottom: 3 }}>
             <Typography variant="h6" gutterBottom sx={{ color: "#388e3c" }}>
-            기술, 경력 & 자격증
+              기술, 경력 & 자격증
             </Typography>
             <Grid container spacing={3}>
               <Grid item xs={12}>
@@ -207,7 +207,7 @@ function ResumeEdit() {
 
           {/* 기타 정보 그룹 */}
           <Box sx={{ marginBottom: 3 }}>
-            <Typography variant="h6" gutterBottom sx={{ color:  "#f57c00" }}>
+            <Typography variant="h6" gutterBottom sx={{ color: "#f57c00" }}>
               기타 정보
             </Typography>
             <Grid container spacing={3}>
