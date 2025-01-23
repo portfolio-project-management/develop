@@ -8,6 +8,11 @@ import ResumeView from './pages/ResumeView';
 import ProposalEdit from './pages/ProposalEdit';
 import ProposalView from './pages/ProposalView';
 import ProposalList from './pages/ProposalList';
+import Main from './pages/Main';
+import PortfolioBoardEdit from './pages/PortfolioBoardEdit';
+import PortfolioBoard from './pages/PortfolioBoard';
+
+import Test from './pages/Test';
 
 function App() {
 
@@ -23,6 +28,10 @@ function App() {
           <Route path='/proposal/edit/:proposalId?'element={<ProposalEdit></ProposalEdit>}></Route>
           <Route path='/proposal/view/:proposalId?'element={<ProposalView></ProposalView>}></Route>
           <Route path='/proposal/list/:userId?'element={<ProposalList></ProposalList>}></Route>
+          <Route path='/portfolioboard' element={<PortfolioBoard></PortfolioBoard>}></Route>
+          <Route path='/portfolioboard/edit' element={<PortfolioBoardEdit></PortfolioBoardEdit>}></Route>
+
+          <Route path='/test' element={<Test></Test>}></Route>
         </Routes>
       </BrowserRouter>
     </div>

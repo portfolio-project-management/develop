@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.ThreadLocalRandom;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -21,6 +22,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.portfolio.dto.UserDTO;
 import com.portfolio.entity.User;
 import com.portfolio.repository.UserRepository;
+import com.portfolio.session.SessionManager;
+
+import jakarta.servlet.http.HttpServletResponse;
 
 @Service
 public class UserService {
@@ -29,6 +33,9 @@ public class UserService {
 	
 	@Autowired
 	UserRepository userRepository; 
+	
+	@Autowired
+	SessionManager sessionManager;
 	
 	public String userLogin(UserDTO userDTO) {
 		User user = new User();
@@ -147,7 +154,7 @@ public class UserService {
     }
     
     
-    public String checkEmail(String hash) {
+    public String checkEmail(String hash, HttpServletResponse response) {
     
     	String result = login.getOrDefault(hash.split("=")[1], "정보없음");
     	
@@ -160,11 +167,19 @@ public class UserService {
         List<User> users = userRepository.findByEmail(result);
         
         if(users.size() > 0) {
-        	//회원
-        	// 쿠키, 세션 발급 후 메인으로 리다이렉션
+        	//회원일 경우 쿠키, 세션 발급
+        	sessionManager.createSession(users.get(0).getUserId(), response);
+        	//그 후 인증정보 지우고, 메인 페이지로 이동
+        	login.remove(hash.split("=")[1]);
+        	return "로그인";
+        }else {
+        	// 확인 후 kakao 인증 정보 지우기
+        	// 회원이 아닐경우 회원가입 페이지로 이동 -> email인증은 된 상태 
+            login.remove(hash.split("=")[1]);
+        	return result;
         }
     	
-    	return result;
+        
     }
     
     // OTP 전송

@@ -1,5 +1,7 @@
 /.metadata/
 
+# java, eclipes, vs code, windows, react, gradle 개발 환경에서 추가해야 할 ignore파일
+
 # Created by https://www.toptal.com/developers/gitignore/api/java,eclipse,visualstudiocode,react,windows,gradle
 # Edit at https://www.toptal.com/developers/gitignore?templates=java,eclipse,visualstudiocode,react,windows,gradle
 

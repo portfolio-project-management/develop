@@ -1,6 +1,8 @@
 package com.portfolio.controller;
 
 import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -47,6 +49,18 @@ public class UserController {
 		return sessionManager.findCookie(request.getCookies());
 	}
 
+
+	// 카카오 로그인 ( 요청 받은 후 리다이렉션 )
+	@GetMapping("/redirect/kakao")
+	public void kakaoSignin(HttpServletResponse response) throws IOException {
+	    // 카카오 인증 페이지로 리디렉션
+	    String clientId = "4aebca07e15941a5c84240dae043ddea"; // 카카오 REST API 키
+	    String redirectUri = "http://localhost:8080/user/signin/kakao"; // 리디렉션 URI	
+	    String kakaoAuthUrl = "https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=" + clientId + "&redirect_uri=" + URLEncoder.encode(redirectUri, StandardCharsets.UTF_8);
+	    
+	    // 카카오 인증 페이지로 리디렉션
+	    response.sendRedirect(kakaoAuthUrl);
+	}
 	
 	// 카카오 로그인
 	@RequestMapping("/signin/kakao")
@@ -56,8 +70,8 @@ public class UserController {
 	
 	// 카카오 로그인 정상확인
 	@GetMapping("/checkemail")
-	public String checkEmail(@RequestParam("hash") String hash) {
-		return userService.checkEmail(hash);
+	public String checkEmail(@RequestParam("hash") String hash, HttpServletResponse response) {
+		return userService.checkEmail(hash, response);
 	}
 	
 	// 로그아웃
