@@ -79,9 +79,6 @@ function ResumeView() {
                   disabled
                   sx={{
                     marginBottom: 2,
-                    '& .MuiInputBase-root.Mui-disabled': {
-                      backgroundColor: '#f0f0f0'
-                    },
                     '& .MuiFormLabel-root.Mui-disabled': {
                       color: '#1976d2'
                     },
@@ -97,9 +94,6 @@ function ResumeView() {
                   disabled
                   sx={{
                     marginBottom: 2,
-                    '& .MuiInputBase-root.Mui-disabled': {
-                      backgroundColor: '#f0f0f0'
-                    },
                     '& .MuiFormLabel-root.Mui-disabled': {
                       color: '#1976d2'
                     },
@@ -115,9 +109,6 @@ function ResumeView() {
                   disabled
                   sx={{
                     marginBottom: 2,
-                    '& .MuiInputBase-root.Mui-disabled': {
-                      backgroundColor: '#f0f0f0'
-                    },
                     '& .MuiFormLabel-root.Mui-disabled': {
                       color: '#1976d2'
                     },
@@ -133,9 +124,6 @@ function ResumeView() {
                   disabled
                   sx={{
                     marginBottom: 2,
-                    '& .MuiInputBase-root.Mui-disabled': {
-                      backgroundColor: '#f0f0f0'
-                    },
                     '& .MuiFormLabel-root.Mui-disabled': {
                       color: '#1976d2'
                     },
@@ -163,9 +151,6 @@ function ResumeView() {
                   disabled
                   sx={{
                     marginBottom: 2,
-                    '& .MuiInputBase-root.Mui-disabled': {
-                      backgroundColor: '#f0f0f0'
-                    },
                     '& .MuiFormLabel-root.Mui-disabled': {
                       color: '#388e3c'
                     },
@@ -183,9 +168,6 @@ function ResumeView() {
                   disabled
                   sx={{
                     marginBottom: 2,
-                    '& .MuiInputBase-root.Mui-disabled': {
-                      backgroundColor: '#f0f0f0'
-                    },
                     '& .MuiFormLabel-root.Mui-disabled': {
                       color: '#388e3c'
                     },
@@ -203,9 +185,6 @@ function ResumeView() {
                   disabled
                   sx={{
                     marginBottom: 2,
-                    '& .MuiInputBase-root.Mui-disabled': {
-                      backgroundColor: '#f0f0f0'
-                    },
                     '& .MuiFormLabel-root.Mui-disabled': {
                       color: '#388e3c'
                     },
@@ -231,9 +210,6 @@ function ResumeView() {
                   disabled
                   sx={{
                     marginBottom: 2,
-                    '& .MuiInputBase-root.Mui-disabled': {
-                      backgroundColor: '#f0f0f0'
-                    },
                     '& .MuiFormLabel-root.Mui-disabled': {
                       color: '#f57c00'
                     },
@@ -251,9 +227,6 @@ function ResumeView() {
                   disabled
                   sx={{
                     marginBottom: 2,
-                    '& .MuiInputBase-root.Mui-disabled': {
-                      backgroundColor: '#f0f0f0'
-                    },
                     '& .MuiFormLabel-root.Mui-disabled': {
                       color: '#f57c00'
                     },
@@ -271,9 +244,6 @@ function ResumeView() {
                   disabled
                   sx={{
                     marginBottom: 2,
-                    '& .MuiInputBase-root.Mui-disabled': {
-                      backgroundColor: '#f0f0f0'
-                    },
                     '& .MuiFormLabel-root.Mui-disabled': {
                       color: '#f57c00'
                     },
@@ -291,9 +261,6 @@ function ResumeView() {
                   disabled
                   sx={{
                     marginBottom: 2,
-                    '& .MuiInputBase-root.Mui-disabled': {
-                      backgroundColor: '#f0f0f0'
-                    },
                     '& .MuiFormLabel-root.Mui-disabled': {
                       color: '#f57c00'
                     },
@@ -311,9 +278,6 @@ function ResumeView() {
                   disabled
                   sx={{
                     marginBottom: 2,
-                    '& .MuiInputBase-root.Mui-disabled': {
-                      backgroundColor: '#f0f0f0'
-                    },
                     '& .MuiFormLabel-root.Mui-disabled': {
                       color: '#f57c00'
                     },

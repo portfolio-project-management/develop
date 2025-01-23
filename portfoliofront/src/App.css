@@ -142,3 +142,12 @@
 .MuiDrawer-paper{
   margin-top: 70px;
 }
+
+
+
+
+
+/* 제안서 텍스트 필드 글자 색 변경 */
+.MuiTextField-root{
+  color: black;
+}

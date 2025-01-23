@@ -8,7 +8,6 @@ import ResumeView from './pages/ResumeView';
 import ProposalEdit from './pages/ProposalEdit';
 import ProposalView from './pages/ProposalView';
 import ProposalList from './pages/ProposalList';
-import Main from './pages/Main';
 import PortfolioBoardEdit from './pages/PortfolioBoardEdit';
 import PortfolioBoard from './pages/PortfolioBoard';
 
