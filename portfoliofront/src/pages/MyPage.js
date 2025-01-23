@@ -159,6 +159,14 @@ export default function MyPage() {
         navigate(`/proposal/view/${proposalId}`); // 제안서를 클릭하면 해당 제안서 상세 페이지로 이동
     };
 
+    function handleGoResumeEdit () {
+        navigate("/resume/edit");
+    }
+
+    function handleGoPortfolioEdit () {
+        navigate("/portfolioboard/edit");
+    }
+
     return (
         <div>
             <AppBarCustom setUser={setUser}></AppBarCustom>
@@ -183,7 +191,7 @@ export default function MyPage() {
                         <p>이름</p>
                         <p>이메일</p>
                         <p>폰번호</p>
-                        <Button color='info' variant='contained'>이력서 수정</Button>
+                        <Button color='info' variant='contained' onClick={handleGoResumeEdit}>이력서 수정</Button>
                     </div>
                     <div className='myPage_TopMiddle_div'>
                         {
@@ -216,7 +224,7 @@ export default function MyPage() {
                         <br></br>
                         <br></br>
                         <br></br>
-                        <Button color='info' variant='contained'>포트폴리오 수정</Button>
+                        <Button color='info' variant='contained' onClick={handleGoPortfolioEdit}>포트폴리오 수정</Button>
 
                     </div>
                     <div className='myPage_TopRight_div'>
