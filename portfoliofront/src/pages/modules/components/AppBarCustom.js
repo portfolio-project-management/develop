@@ -64,8 +64,8 @@ export default function AppBarCustom({ setUser = () => {} }) {
     const DrawerList = (
         <div>
             <List sx={{
-                width:300,
-                fontSize:22
+                width:200,
+                fontSize:15
             }}>
                 <ListItem button onClick={() => navigate('/')} 
                     sx={{
@@ -77,6 +77,16 @@ export default function AppBarCustom({ setUser = () => {} }) {
                     <p>메인</p>
                 </ListItem>
 
+                <ListItem ButtonBase onClick={() => navigate('/mypage')} // 개인 정보 페이지? 보류
+                    sx={{
+                        '&:hover': {
+                            textDecoration:"underline",  // 마우스 오버 시 배경색
+                            cursor: 'pointer',
+                        },
+                    }}>
+                    <p>개인 페이지</p>
+                </ListItem>
+
                 <ListItem ButtonBase onClick={() => navigate('/portfolioboard')}
                     sx={{
                         '&:hover': {
@@ -85,6 +95,16 @@ export default function AppBarCustom({ setUser = () => {} }) {
                         },
                     }}>
                     <p>포트폴리오 게시판</p>
+                </ListItem>
+
+                <ListItem ButtonBase onClick={() => navigate('/proposal/list')}
+                    sx={{
+                        '&:hover': {
+                            textDecoration:"underline",  // 마우스 오버 시 배경색
+                            cursor: 'pointer',
+                        },
+                    }}>
+                    <p>제안서 게시판</p>
                 </ListItem>
                 {/* <ListItem button onClick={() => navigate('/contact')}>
                     <ListItemText primary="Contact" />
