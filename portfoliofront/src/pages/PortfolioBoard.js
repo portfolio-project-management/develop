@@ -3,7 +3,6 @@ import { SERVER_URL } from "../Link";
 import AppBarCustom from "./modules/components/AppBarCustom";
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
 import Portfolio from './Portfolio';
-import { useResolvedPath } from "react-router-dom";
 
 export default function PortfolioBoard() {
 
@@ -132,19 +131,19 @@ export default function PortfolioBoard() {
                 {portfolioList && 
                     portfolioList.map((portfolio,index) => (
                         <div key={index} className='portfolio' data-index={index} onClick={handleOpenDialog}>
-                            <img src={`data:image/jpeg;base64,${portfolio.mainFile}`} alt="메인 이미지" width={500} height={312}></img>
+                            <img src={`data:image/jpeg;base64,${portfolio.mainFile}`} alt="메인 이미지" width={300} height={187}></img>
                             <div className="portfolioBoard_ListInfo_div">
                                 <div className="portfolioBoard_ListInfoFirst_div">
-                                    <p style={{fontSize:25, fontWeight:"bold", margin:0, marginLeft:20}}>{portfolio.title} </p>
+                                    <p style={{fontSize:20, fontWeight:"bold", margin:0, marginLeft:20}}>{portfolio.title} </p>
                                     <p style={{margin:20}}>{portfolio.userId}</p>
                                 </div>
                                 <div className="portfolioBoard_ListInfoSecond_div">
-                                    <p style={{fontSize:20, margin:0, display:"flex", justifyContent:"center"}}>
+                                    <p style={{fontSize:15, margin:0, display:"flex", justifyContent:"center"}}>
                                         <img src="/static/images/good_icon.png" style={{marginRight:20}}></img>
                                         {portfolio.goods}
                                     </p>
                                     <br></br>
-                                    <p style={{fontSize:20, margin:0, display:"flex", justifyContent:"center"}}>
+                                    <p style={{fontSize:15, margin:0, display:"flex", justifyContent:"center"}}>
                                         <img src="/static/images/view_icon.png" style={{marginRight:20}}></img>
                                         {portfolio.view}
                                     </p>

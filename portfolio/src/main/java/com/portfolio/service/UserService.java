@@ -1,10 +1,14 @@
 package com.portfolio.service;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
-import java.util.concurrent.ThreadLocalRandom;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -16,6 +20,7 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -219,5 +224,63 @@ public class UserService {
     	
     	//데이터베이스 저장 ( 결과 반환 )
     	return userRepository.save(user) == null? "실패" : "성공";
+    }
+    
+    //전송받은 마이페이지 사진 변환, 저장
+    public void changePhoto(MultipartFile photo, String userId) {
+    	
+    	String uploadDir = "C:\\uploads\\images\\mypage"; // 사진 업로드 경로 하드코딩으로 진행함
+		Path path = Paths.get(uploadDir);
+
+		//디렉토리 없으면 생성
+	    try {
+			Files.createDirectories(path);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	    
+	    //파일 이름
+		String fileName = photo.getOriginalFilename();
+		
+		// 사진 폴더에 저장
+		if (fileName != null && fileName.lastIndexOf('.') != -1) {
+		    String mainFileName = userId + ".jpg";
+		    
+		    // 해당 폴더에 저장
+		    Path mypagePath = Paths.get(uploadDir, mainFileName);
+			
+			try {
+				Files.copy(photo.getInputStream(), mypagePath, StandardCopyOption.REPLACE_EXISTING);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+    }
+    
+    //저장된 마이페이지 사진 반환
+    public String getPhoto(String userId) {
+    	
+		String myPageDir = "C:\\uploads\\images\\mypage"; // 메인사진 업로드 경로 ( 하드 코딩으로 진행 - 나중에 다른 폴더로 빼기 )
+		String fileName = userId + ".jpg";
+		
+		Path filePath = Paths.get(myPageDir,fileName);
+		
+		// 파일을 byte[]로 읽어서 Base64로 변환
+		try {
+			byte[] fileBytes = Files.readAllBytes(filePath);
+			String base64Encoded = Base64.getEncoder().encodeToString(fileBytes);
+
+			// 64비트로 변환된 메인 파일 전송
+			return base64Encoded;
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+        
+		// 예외 시 "전송오류" 반환
+		return "전송오류";
     }
 }

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.portfolio.dto.UserDTO;
 import com.portfolio.service.UserService;
@@ -90,5 +91,16 @@ public class UserController {
 	@GetMapping("/sendotp")
 	public String sendOTP() {
 		return userService.sendOTP();
+	}
+	
+	@GetMapping("/getphoto")
+	public String getPhoto(@RequestParam("userId") String userId) {
+		return userService.getPhoto(userId);
+	}
+	
+	// 유저 마이페이지 사진 변경
+	@PostMapping("/change/photo")
+	public void changePhoto(@RequestParam("photo") MultipartFile photo, @RequestParam("userId") String userId) {
+		userService.changePhoto(photo, userId);
 	}
 }

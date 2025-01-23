@@ -10,8 +10,7 @@ import ProposalView from './pages/ProposalView';
 import ProposalList from './pages/ProposalList';
 import PortfolioBoardEdit from './pages/PortfolioBoardEdit';
 import PortfolioBoard from './pages/PortfolioBoard';
-
-import Test from './pages/Test';
+import MyPage from './pages/MyPage';
 
 function App() {
 
@@ -22,15 +21,18 @@ function App() {
           <Route path='/' element={<Main></Main>}></Route>
           <Route path='/signin' element={<SignIn></SignIn>}></Route>
           <Route path='/signup/:hash?' element={<SignUp></SignUp>}></Route>
+
+          <Route path='/mypage' element={<MyPage></MyPage>}></Route>
+
           <Route path='/resume/view' element={<ResumeView></ResumeView>}></Route>
           <Route path='/resume/edit'element={<ResumeEdit></ResumeEdit>}></Route>
+
           <Route path='/proposal/edit/:proposalId?'element={<ProposalEdit></ProposalEdit>}></Route>
           <Route path='/proposal/view/:proposalId?'element={<ProposalView></ProposalView>}></Route>
           <Route path='/proposal/list/:userId?'element={<ProposalList></ProposalList>}></Route>
+
           <Route path='/portfolioboard' element={<PortfolioBoard></PortfolioBoard>}></Route>
           <Route path='/portfolioboard/edit' element={<PortfolioBoardEdit></PortfolioBoardEdit>}></Route>
-
-          <Route path='/test' element={<Test></Test>}></Route>
         </Routes>
       </BrowserRouter>
     </div>
