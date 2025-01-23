@@ -22,12 +22,14 @@ public class UserResumeService {
 	@Autowired
 	UserRepository userRepository;
 	
+	//이력서 보기
 	public UserResumeDTO getResume(String userId) {
 		
 		User user = userRepository.findByUserId(userId).get(0);
 		
 		List<UserResume> userResumes = userResumeRepository.findByUserId(user.getId());
 		
+		//이력서가 1개라도 존재하면
 		if(userResumes.size() > 0) {
 			
 			UserResume userResume = userResumes.get(0);
@@ -59,6 +61,7 @@ public class UserResumeService {
 				);
     }
 	
+	//이력서가 없으면 추가하기
 	public String resumeAdd(UserResumeDTO userResumeDTO) {
 	    	
 			User user = userRepository.findByUserId(userResumeDTO.getUserId()).get(0);

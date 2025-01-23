@@ -48,6 +48,10 @@ function ProposalView(){
     const handleButtonClick = () => {
       navigate('/resume/view');
     }
+
+    const handleListClick= () => {
+      navigate('/proposal/list');
+    }
     return(
         <>
         <AppBarCustom setUser={setUser} />
@@ -161,6 +165,9 @@ function ProposalView(){
           :
           null
         }
+        <Button variant="outlined" color="success" size="large" onClick={handleListClick}>
+          제안서 목록 페이지로 돌아가기
+        </Button>
         <Button variant="outlined" color="error" size="large" onClick={handleGoHome}>
           메인 페이지로 돌아가기
         </Button>
