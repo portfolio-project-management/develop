@@ -11,8 +11,6 @@ import ProposalList from './pages/ProposalList';
 import PortfolioBoardEdit from './pages/PortfolioBoardEdit';
 import PortfolioBoard from './pages/PortfolioBoard';
 
-import Test from './pages/Test';
-
 function App() {
 
   return (
@@ -30,7 +28,6 @@ function App() {
           <Route path='/portfolioboard' element={<PortfolioBoard></PortfolioBoard>}></Route>
           <Route path='/portfolioboard/edit' element={<PortfolioBoardEdit></PortfolioBoardEdit>}></Route>
 
-          <Route path='/test' element={<Test></Test>}></Route>
         </Routes>
       </BrowserRouter>
     </div>
