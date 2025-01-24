@@ -24,6 +24,11 @@ export default function MyPage() {
     const navigate = useNavigate();
 
     useEffect(() => {
+        
+        const data = new Date();
+        console.log(data.getTime());
+
+
         if(user !== ""){
             if(user !== "비로그인"){ // 로그인 된 유저라면
                 // 마이페이지 사진
