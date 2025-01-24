@@ -300,7 +300,7 @@ export default function MyPage() {
                         type='file'
                         onChange={handleChangeMainPhoto} 
                         style={{
-                            backgroundImage:`url(${photo ? "data:image/jpeg;base64,"+photo : "/static/images/myPage_basicPhoto.jpg"})`,
+                            backgroundImage:`url(${photo !== "전송오류" ? "data:image/jpeg;base64,"+photo : "/static/images/myPage_basicPhoto.jpg"})`,
                             backgroundSize: '100% 100%',
                             width:400,
                             height:300,
