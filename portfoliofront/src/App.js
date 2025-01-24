@@ -11,6 +11,7 @@ import ProposalList from './pages/ProposalList';
 import PortfolioBoardEdit from './pages/PortfolioBoardEdit';
 import PortfolioBoard from './pages/PortfolioBoard';
 import MyPage from './pages/MyPage';
+import ChatRoomList from './pages/ChatRoomList';
 
 function App() {
 
@@ -33,6 +34,8 @@ function App() {
 
           <Route path='/portfolioboard' element={<PortfolioBoard></PortfolioBoard>}></Route>
           <Route path='/portfolioboard/edit' element={<PortfolioBoardEdit></PortfolioBoardEdit>}></Route>
+
+          <Route path='/chat/roomlist' element={<ChatRoomList></ChatRoomList>}></Route>
         </Routes>
       </BrowserRouter>
     </div>

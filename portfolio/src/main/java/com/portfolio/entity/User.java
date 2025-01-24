@@ -52,5 +52,15 @@ public class User {
 	@OneToOne(cascade = CascadeType.ALL, mappedBy="user")
 	private UserResume userResume;
 	
+	//----------- 웹 소켓
+	
+	@OneToMany(mappedBy="user")
+	private List<Room> rooms;
+	
+	@OneToMany(cascade=CascadeType.ALL, mappedBy="user")
+	private List<Message> messages;
+	
+	@OneToMany(cascade=CascadeType.ALL, mappedBy="user")
+	private List<Member> members;
 	
 }

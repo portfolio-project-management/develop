@@ -106,6 +106,16 @@ export default function AppBarCustom({ setUser = () => {} }) {
                     }}>
                     <p>제안서 게시판</p>
                 </ListItem>
+
+                <ListItem ButtonBase onClick={() => navigate('/chat/roomlist')}
+                    sx={{
+                        '&:hover': {
+                            textDecoration:"underline",  // 마우스 오버 시 배경색
+                            cursor: 'pointer',
+                        },
+                    }}>
+                    <p>채팅 게시판</p>
+                </ListItem>
                 {/* <ListItem button onClick={() => navigate('/contact')}>
                     <ListItemText primary="Contact" />
                 </ListItem> */}

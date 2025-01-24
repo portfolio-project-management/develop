@@ -210,3 +210,90 @@
 
   border: 1px solid black;
 } 
+
+
+/* 채팅방 */
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: flex-end;
+  padding: 10px;
+  background-color: #f2f2f2;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.message-list {
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  max-height: 400px;
+  margin-bottom: 20px;
+}
+
+.message-list .message-content {
+  padding: 10px;
+  border-radius: 10px;
+  margin: 5px 0;
+  max-width: 75%;
+  word-wrap: break-word;
+  background-color: #ffffff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.my-message {
+  align-self: flex-end;
+  background-color: #e1ffc7; /* 내 메시지는 밝은 초록색 */
+}
+
+.other-message {
+  align-self: flex-start;
+  background-color: #ffffff; /* 상대방 메시지는 흰색 */
+}
+
+.message-content .user-id {
+  font-weight: bold;
+  font-size: 0.9rem;
+  margin-bottom: 5px;
+}
+
+.message-content .message-time {
+  font-size: 0.8rem;
+  color: #888;
+  margin-bottom: 5px;
+}
+
+.message-content .message-text {
+  font-size: 1rem;
+  line-height: 1.4;
+}
+
+.chat-input {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+}
+
+.chat-input input {
+  width: 85%;
+  padding: 10px;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
+
+.chat-input button {
+  width: 12%;
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.chat-input button:hover {
+  background-color: #0056b3;
+}
