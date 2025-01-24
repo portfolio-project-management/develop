@@ -54,7 +54,7 @@ public class UserProposalService {
 		 
 			UserProposal userProposal = new UserProposal();
 			
-			User user = userRepository.findByUserId(userProposalDTO.getUserId()).get(0);
+			User user = userRepository.findByUserId(userProposalDTO.getUserId());
 			
 			userProposal.setTitle(userProposalDTO.getTitle());
 			userProposal.setExpectedTeamMembers(userProposalDTO.getExpectedTeamMembers());

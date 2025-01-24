@@ -169,11 +169,11 @@ public class UserService {
     	}
     	
     	//회원 유무 확인
-        List<User> users = userRepository.findByEmail(result);
+        User user = userRepository.findByEmail(result);
         
-        if(users.size() > 0) {
+        if(user != null) {
         	//회원일 경우 쿠키, 세션 발급
-        	sessionManager.createSession(users.get(0).getUserId(), response);
+        	sessionManager.createSession(user.getUserId(), response);
         	//그 후 인증정보 지우고, 메인 페이지로 이동
         	login.remove(hash.split("=")[1]);
         	return "로그인";
@@ -207,9 +207,9 @@ public class UserService {
     // 회원가입
     public String userSignup(UserDTO userDTO) {
     	
-    	if(userRepository.findByEmail(userDTO.getEmail()).size() > 0) {
+    	if(userRepository.findByEmail(userDTO.getEmail()) != null) {
     		return "이메일 중복";
-    	}else if(userRepository.findByUserId(userDTO.getUserId()).size() > 0){
+    	}else if(userRepository.findByUserId(userDTO.getUserId()) != null){
     		return "아이디 중복";
     	}
     	
@@ -286,7 +286,7 @@ public class UserService {
     
     // 마이페이지에 필요한 유저 정보
     public UserDTO getMyPageUserInfo(String userId) {
-    	User user = userRepository.findByUserId(userId).get(0);
+    	User user = userRepository.findByUserId(userId);
     	
     	return new UserDTO(
     				user.getUserId(),

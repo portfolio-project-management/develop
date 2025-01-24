@@ -79,7 +79,7 @@ public class PortfolioBoardService {
 	public PortfolioBoardDTO getPortfolio (String userId) {
 		
 		// 특정 유저의 포폴 가져가기
-		User user = userRepository.findByUserId(userId).get(0);
+		User user = userRepository.findByUserId(userId);
 		
 		//작성된 포트폴리오가 있으면 가지고 가고 아니면 빈 값 가져가기
 		List<PortfolioBoard> portfolioBoards = portfolioBoardRepostiory.findByUser(user);
@@ -109,7 +109,7 @@ public class PortfolioBoardService {
 	//조회수 증가
 	public void addView(String userId) {
 		//작성 유저의 포트폴리오 정보 가져오기
-		PortfolioBoard portfolioBoard = portfolioBoardRepostiory.findByUser(userRepository.findByUserId(userId).get(0)).get(0);
+		PortfolioBoard portfolioBoard = portfolioBoardRepostiory.findByUser(userRepository.findByUserId(userId)).get(0);
 		
 		//1 증가 후 저장
 		portfolioBoard.setView(portfolioBoard.getView()+1);
@@ -122,7 +122,7 @@ public class PortfolioBoardService {
 		
 		PortfolioBoard portfolioBoard = new PortfolioBoard();
 		
-		User user = userRepository.findByUserId(portfolioBoardDTO.getUserId()).get(0);
+		User user = userRepository.findByUserId(portfolioBoardDTO.getUserId());
 		
 		// 이미 추가한 적이 있는 사용자인지 확인
 		List<PortfolioBoard> checkPortfolioBoard = portfolioBoardRepostiory.findByUser(user);

@@ -30,7 +30,7 @@ public class GoodService {
 	public void addGood(String userId, int portfolioBoardId) {
 		//좋아요 추가 ( 만약 이미 눌린 사람이 버그로 두 번 눌리면 두 번 추가됨 - 수정 필요 )
 		Good good = new Good();
-		good.setUser(userRepository.findByUserId(userId).get(0));
+		good.setUser(userRepository.findByUserId(userId));
 		good.setPortfolioBoard(portfolioBoardRepository.getReferenceById(portfolioBoardId));
 		goodRepository.save(good);
 	}

@@ -46,7 +46,7 @@ public class CommentService {
 		System.out.println(commentDTO);
 		
 		Comment comment = new Comment();
-		User user = userRepository.findByUserId(commentDTO.getUserId()).get(0);
+		User user = userRepository.findByUserId(commentDTO.getUserId());
 		PortfolioBoard portfolioBoard = portfolioBoardRepository.getReferenceById(commentDTO.getPortfolioBoardId());
 		
 		comment.setContent(commentDTO.getContent());

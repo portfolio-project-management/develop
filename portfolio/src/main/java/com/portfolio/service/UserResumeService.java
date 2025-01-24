@@ -25,7 +25,7 @@ public class UserResumeService {
 	//이력서 보기
 	public UserResumeDTO getResume(String userId) {
 		
-		User user = userRepository.findByUserId(userId).get(0);
+		User user = userRepository.findByUserId(userId);
 		
 		List<UserResume> userResumes = userResumeRepository.findByUserId(user.getId());
 		
@@ -64,7 +64,7 @@ public class UserResumeService {
 	//이력서가 없으면 추가하기
 	public String resumeAdd(UserResumeDTO userResumeDTO) {
 	    	
-			User user = userRepository.findByUserId(userResumeDTO.getUserId()).get(0);
+			User user = userRepository.findByUserId(userResumeDTO.getUserId());
 			user.setName(userResumeDTO.getName());
 			user.setAddress(userResumeDTO.getAddress());
 			user.setEmail(userResumeDTO.getEmail());
