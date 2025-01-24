@@ -93,6 +93,13 @@ public class UserController {
 		return userService.sendOTP();
 	}
 	
+	// 유저 정보 가져오기
+	@GetMapping("/getInfo")
+	public UserDTO getUserMyPageInfo(@RequestParam("userId") String userId) {
+		return userService.getMyPageUserInfo(userId);
+	}
+	
+	// 유저 마이페이지 사진 가져오기
 	@GetMapping("/getphoto")
 	public String getPhoto(@RequestParam("userId") String userId) {
 		return userService.getPhoto(userId);

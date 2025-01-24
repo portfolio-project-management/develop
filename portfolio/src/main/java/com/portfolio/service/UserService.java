@@ -283,4 +283,17 @@ public class UserService {
 		// 예외 시 "전송오류" 반환
 		return "전송오류";
     }
+    
+    // 마이페이지에 필요한 유저 정보
+    public UserDTO getMyPageUserInfo(String userId) {
+    	User user = userRepository.findByUserId(userId).get(0);
+    	
+    	return new UserDTO(
+    				user.getUserId(),
+    				user.getName(),
+    				user.getEmail(),
+    				user.getPhone()
+    			);
+    			
+    }
 }

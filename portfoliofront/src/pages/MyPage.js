@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { SERVER_URL } from '../Link';
 import { useNavigate } from 'react-router-dom';
 import Portfolio from './Portfolio';
-import { Grid } from '@mui/system';
+import { Box, Grid } from '@mui/system';
 
 
 export default function MyPage() {
@@ -19,6 +19,7 @@ export default function MyPage() {
 
     const [ portfolio, setPortfolio ] = useState();
     const [ proposals, setProposals ] = useState();
+    const [ userInfo, setUserInfo ] = useState();
 
     const navigate = useNavigate();
 
@@ -37,7 +38,7 @@ export default function MyPage() {
                 fetch(SERVER_URL + "portfolioboard/getone?userId=" + user)
                 .then(respones => respones.json())
                 .then(data => {
-                    console.log(data)
+                    //console.log(data)
                     setPortfolio({
                         ...data,
                         userId:user
@@ -55,10 +56,18 @@ export default function MyPage() {
                 fetch(SERVER_URL + `proposal/list?userId=${user}&page=` + 0)
                 .then((response) => response.json())
                 .then((data) => {
-                    console.log(data)
+                    //console.log(data)
                     setProposals(data);  // 배열인 경우 상태에 저장
                 })
                 .catch((error) => console.log(error));
+
+                //본인 정보
+                fetch(SERVER_URL + `user/getInfo?userId=` + user)
+                .then(response => response.json())
+                .then(data => {
+                    setUserInfo(data);
+                })
+                .catch(error => console.log(error))
 
                 // 팀
 
@@ -187,15 +196,24 @@ export default function MyPage() {
                         <br></br>
                         <Button color='info' onClick={handleOpenInputPhoto}>이미지 바꾸기</Button>
                         <br></br>
-                        <p>아이디</p>
-                        <p>이름</p>
-                        <p>이메일</p>
-                        <p>폰번호</p>
+                        {
+                            userInfo ?
+                            <div style={{margin:'0 auto', paddingLeft:20, textAlign:'left'}}>
+                                <p>아이디 : {userInfo.userId}</p>
+                                <p>이름 : {userInfo.name}</p>
+                                <p>이메일 : {userInfo.email}</p>
+                                <p>폰번호 : {userInfo.phone}</p>
+                            </div>
+                            :
+                            <p>정보를 불러오지 못했습니다.</p>
+                        }
+                        
                         <Button color='info' variant='contained' onClick={handleGoResumeEdit}>이력서 수정</Button>
                     </div>
                     <div className='myPage_TopMiddle_div'>
                         {
                             portfolio &&
+                            portfolio.path &&
                             portfolio.path.length > 0 ?(
                                 <div className='portfolio' onClick={handleOpenDialog} style={{width:300, margin:'0 auto', marginTop:30}}>                            
                                     <img src={`data:image/jpeg;base64,${portfolio.path[0]}`} alt="메인 이미지" width={300} height={187}></img>
