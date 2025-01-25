@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { SERVER_URL } from '../Link';
 import { useNavigate } from 'react-router-dom';
 import Portfolio from './Portfolio';
-import { Box, Grid } from '@mui/system';
+import { Box, Grid } from '@mui/material';
 
 
 export default function MyPage() {
@@ -245,9 +245,6 @@ export default function MyPage() {
                         <br></br>
                         <Button color='info' variant='contained' onClick={handleGoPortfolioEdit}>포트폴리오 수정</Button>
 
-                    </div>
-                    <div className='myPage_TopRight_div'>
-                        <p>팀 프로젝트</p>
                     </div>
                 </div>
                 <div className='myPage_Bottom_div'>

@@ -16,7 +16,7 @@ public class RoomDTO {
 	private String createUserId;
 	private List<MessageDTO> messages;
 	private List<PlanDTO> plans;
-	private List<MemberDTO> members;
+	private List<RoomMemberDTO> members;
 	
 	public RoomDTO() {
 		super();
@@ -33,7 +33,7 @@ public class RoomDTO {
 
 	//채팅 ( 캘린더와 생성자가 곂치는 판정 때문에 name이랑 id 위치를 바꿈 )
 	public RoomDTO(String name, int id, String invitationCode, String createUserId, List<MessageDTO> messages,
-			List<MemberDTO> members) {
+			List<RoomMemberDTO> members) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -45,7 +45,7 @@ public class RoomDTO {
 
 	//캘린더
 	public RoomDTO(int id, String name, String invitationCode, String createUserId, List<PlanDTO> plans,
-			List<MemberDTO> members) {
+			List<RoomMemberDTO> members) {
 		super();
 		this.id = id;
 		this.name = name;

@@ -14,27 +14,27 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-@Entity
 @Getter
 @Setter
 @ToString
-public class Room {
-	
+@Entity
+public class Calendar {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	
 	private String name;
-
+	
 	private String invitationCode;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	private User user;
 	
-	@OneToMany(cascade=CascadeType.ALL, mappedBy="room")
-	private List<RoomMember> roomMembers;
+	@OneToMany(cascade=CascadeType.ALL, mappedBy="calendar")
+	private List<CalendarMember> calendarMembers;
 	
-	@OneToMany(cascade=CascadeType.ALL, mappedBy="room")
-	private List<Message> messages;
+	@OneToMany(cascade=CascadeType.ALL, mappedBy="calendar")
+	private List<Plan> plans;
 	
 }

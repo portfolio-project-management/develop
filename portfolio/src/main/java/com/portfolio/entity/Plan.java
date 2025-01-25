@@ -1,6 +1,6 @@
 package com.portfolio.entity;
 
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -19,8 +19,7 @@ import lombok.ToString;
 public class Plan {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
+	private String id;
 	
 	private String name;
 	
@@ -28,8 +27,13 @@ public class Plan {
 	
 	private String color;
 	
-	private LocalDateTime time;
+	private Timestamp startTime;
+	
+	private Timestamp endTime;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	private Room room;
+	private Calendar calendar;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	private User user;
 }

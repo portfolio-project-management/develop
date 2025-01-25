@@ -7,7 +7,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class MemberDTO {
+public class CalendarMemberDTO {
 	private int id;
 	private String userId;
 }

@@ -14,7 +14,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class Member {
+public class RoomMember {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

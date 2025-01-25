@@ -12,6 +12,7 @@ import PortfolioBoardEdit from './pages/PortfolioBoardEdit';
 import PortfolioBoard from './pages/PortfolioBoard';
 import MyPage from './pages/MyPage';
 import ChatRoomList from './pages/ChatRoomList';
+import CalendarList from './pages/CalendarList';
 
 function App() {
 
@@ -36,6 +37,7 @@ function App() {
           <Route path='/portfolioboard/edit' element={<PortfolioBoardEdit></PortfolioBoardEdit>}></Route>
 
           <Route path='/chat/roomlist' element={<ChatRoomList></ChatRoomList>}></Route>
+          <Route path='/calendar' element={<CalendarList></CalendarList>}></Route>
         </Routes>
       </BrowserRouter>
     </div>

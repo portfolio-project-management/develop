@@ -52,7 +52,7 @@ public class User {
 	@OneToOne(cascade = CascadeType.ALL, mappedBy="user")
 	private UserResume userResume;
 	
-	//----------- 웹 소켓
+	//----------- 웹 소켓 ( 채팅 )
 	
 	@OneToMany(mappedBy="user")
 	private List<Room> rooms;
@@ -61,6 +61,17 @@ public class User {
 	private List<Message> messages;
 	
 	@OneToMany(cascade=CascadeType.ALL, mappedBy="user")
-	private List<Member> members;
+	private List<RoomMember> roomMembers;
 	
+	
+	//------------ 웹 소켓 ( 캘린더 )
+	
+	@OneToMany(mappedBy="user")
+	private List<Calendar> calendars;
+	
+	@OneToMany(cascade=CascadeType.ALL, mappedBy="user")
+	private List<CalendarMember> calendarMembers;
+	
+	@OneToMany(cascade=CascadeType.ALL, mappedBy="user")
+	private List<Plan> plans;
 }

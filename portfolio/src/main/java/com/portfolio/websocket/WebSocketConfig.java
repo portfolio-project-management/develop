@@ -29,6 +29,6 @@ public class WebSocketConfig implements WebSocketConfigurer {
         
         
         // 캘린더 관련 처리
-        registry.addHandler(webSocketPlanHandler, "/plan").setAllowedOrigins("*");
+        registry.addHandler(webSocketPlanHandler, "/calendar").setAllowedOrigins("*");
     }
 }

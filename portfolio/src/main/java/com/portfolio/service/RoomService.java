@@ -8,10 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.portfolio.dto.RoomDTO;
-import com.portfolio.entity.Member;
+import com.portfolio.entity.RoomMember;
 import com.portfolio.entity.Room;
 import com.portfolio.entity.User;
-import com.portfolio.repository.MemberRepository;
+import com.portfolio.repository.RoomMemberRepository;
 import com.portfolio.repository.RoomRepository;
 import com.portfolio.repository.UserRepository;
 
@@ -25,7 +25,7 @@ public class RoomService {
 	UserRepository userRepository;
 	
 	@Autowired
-	MemberRepository memberRepository;
+	RoomMemberRepository roomMemberRepository;
 	
 	
 	// 방 생성
@@ -39,7 +39,7 @@ public class RoomService {
 			room.setUser(user);
 			room.setInvitationCode(UUID.randomUUID().toString());
 			
-			Member member = new Member();
+			RoomMember member = new RoomMember();
 			
 			member.setRoom(room);
 			member.setUser(user);
@@ -47,7 +47,7 @@ public class RoomService {
 			try {
 				
 				roomRepository.save(room);
-				memberRepository.save(member);
+				roomMemberRepository.save(member);
 				
 			}catch(Exception e) {
 				
@@ -75,14 +75,14 @@ public class RoomService {
 			//정상적인 유저라면
 			if(user != null) {
 				
-				Member alreadyMember = memberRepository.findByRoomAndUser(room, user);
+				RoomMember alreadyMember = roomMemberRepository.findByRoomAndUser(room, user);
 				
 				if(alreadyMember == null) { // 이미 들어가있는 유저가 아닐 때
-					Member member = new Member();
+					RoomMember member = new RoomMember();
 					member.setRoom(room);
 					member.setUser(user);
 					
-					memberRepository.save(member);
+					roomMemberRepository.save(member);
 					
 					return "입장완료";
 				}else {
@@ -100,7 +100,7 @@ public class RoomService {
 	//입장한 방 정보
 	public List<RoomDTO> getRooms(String userId) {
 		
-		List<Room> rooms = roomRepository.findDistinctByMembersUserUserId(userId);
+		List<Room> rooms = roomRepository.findDistinctByRoomMembersUserUserId(userId);
 		
 		return rooms
 				.stream()
