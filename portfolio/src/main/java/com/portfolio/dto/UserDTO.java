@@ -13,7 +13,9 @@ public class UserDTO {
 	private String name;
 	private String email;
 	private String userId;
-	private String passWord; 
+	private String passWord;
+	private String phone;
+	private String address;
 	
 	
 	public UserDTO(String userId, String passWord) {
@@ -21,9 +23,23 @@ public class UserDTO {
 		this.passWord = passWord;
 	}
 
+	
+	
 
 	public UserDTO() {
 		super();
+	}
+
+
+
+	
+	// 마이페이지에서 가져가는 정보
+	public UserDTO(String userId, String name, String email,  String phone) {
+		super();
+		this.name = name;
+		this.email = email;
+		this.userId = userId;
+		this.phone = phone;
 	}
 	
 	

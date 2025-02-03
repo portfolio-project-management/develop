@@ -1,6 +1,11 @@
 package com.portfolio.service;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
@@ -15,12 +20,16 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.portfolio.dto.UserDTO;
 import com.portfolio.entity.User;
 import com.portfolio.repository.UserRepository;
+import com.portfolio.session.SessionManager;
+
+import jakarta.servlet.http.HttpServletResponse;
 
 @Service
 public class UserService {
@@ -29,6 +38,9 @@ public class UserService {
 	
 	@Autowired
 	UserRepository userRepository; 
+	
+	@Autowired
+	SessionManager sessionManager;
 	
 	public String userLogin(UserDTO userDTO) {
 		User user = new User();
@@ -147,7 +159,7 @@ public class UserService {
     }
     
     
-    public String checkEmail(String hash) {
+    public String checkEmail(String hash, HttpServletResponse response) {
     
     	String result = login.getOrDefault(hash.split("=")[1], "정보없음");
     	
@@ -157,14 +169,22 @@ public class UserService {
     	}
     	
     	//회원 유무 확인
-        List<User> users = userRepository.findByEmail(result);
+        User user = userRepository.findByEmail(result);
         
-        if(users.size() > 0) {
-        	//회원
-        	// 쿠키, 세션 발급 후 메인으로 리다이렉션
+        if(user != null) {
+        	//회원일 경우 쿠키, 세션 발급
+        	sessionManager.createSession(user.getUserId(), response);
+        	//그 후 인증정보 지우고, 메인 페이지로 이동
+        	login.remove(hash.split("=")[1]);
+        	return "로그인";
+        }else {
+        	// 확인 후 kakao 인증 정보 지우기
+        	// 회원이 아닐경우 회원가입 페이지로 이동 -> email인증은 된 상태 
+            login.remove(hash.split("=")[1]);
+        	return result;
         }
     	
-    	return result;
+        
     }
     
     // OTP 전송
@@ -187,9 +207,9 @@ public class UserService {
     // 회원가입
     public String userSignup(UserDTO userDTO) {
     	
-    	if(userRepository.findByEmail(userDTO.getEmail()).size() > 0) {
+    	if(userRepository.findByEmail(userDTO.getEmail()) != null) {
     		return "이메일 중복";
-    	}else if(userRepository.findByUserId(userDTO.getUserId()).size() > 0){
+    	}else if(userRepository.findByUserId(userDTO.getUserId()) != null){
     		return "아이디 중복";
     	}
     	
@@ -199,8 +219,81 @@ public class UserService {
     	user.setEmail(userDTO.getEmail());
     	user.setName(userDTO.getName());
     	user.setId(UUID.randomUUID().toString());
+    	user.setPhone(userDTO.getPhone());
+    	user.setAddress(userDTO.getAddress());
     	
     	//데이터베이스 저장 ( 결과 반환 )
     	return userRepository.save(user) == null? "실패" : "성공";
+    }
+    
+    //전송받은 마이페이지 사진 변환, 저장
+    public void changePhoto(MultipartFile photo, String userId) {
+    	
+    	String uploadDir = "C:\\uploads\\images\\mypage"; // 사진 업로드 경로 하드코딩으로 진행함
+		Path path = Paths.get(uploadDir);
+
+		//디렉토리 없으면 생성
+	    try {
+			Files.createDirectories(path);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	    
+	    //파일 이름
+		String fileName = photo.getOriginalFilename();
+		
+		// 사진 폴더에 저장
+		if (fileName != null && fileName.lastIndexOf('.') != -1) {
+		    String mainFileName = userId + ".jpg";
+		    
+		    // 해당 폴더에 저장
+		    Path mypagePath = Paths.get(uploadDir, mainFileName);
+			
+			try {
+				Files.copy(photo.getInputStream(), mypagePath, StandardCopyOption.REPLACE_EXISTING);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+    }
+    
+    //저장된 마이페이지 사진 반환
+    public String getPhoto(String userId) {
+    	
+		String myPageDir = "C:\\uploads\\images\\mypage"; // 메인사진 업로드 경로 ( 하드 코딩으로 진행 - 나중에 다른 폴더로 빼기 )
+		String fileName = userId + ".jpg";
+		
+		Path filePath = Paths.get(myPageDir,fileName);
+		
+		// 파일을 byte[]로 읽어서 Base64로 변환
+		try {
+			byte[] fileBytes = Files.readAllBytes(filePath);
+			String base64Encoded = Base64.getEncoder().encodeToString(fileBytes);
+
+			// 64비트로 변환된 메인 파일 전송
+			return base64Encoded;
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+        
+		// 예외 시 "전송오류" 반환
+		return "전송오류";
+    }
+    
+    // 마이페이지에 필요한 유저 정보
+    public UserDTO getMyPageUserInfo(String userId) {
+    	User user = userRepository.findByUserId(userId);
+    	
+    	return new UserDTO(
+    				user.getUserId(),
+    				user.getName(),
+    				user.getEmail(),
+    				user.getPhone()
+    			);
+    			
     }
 }

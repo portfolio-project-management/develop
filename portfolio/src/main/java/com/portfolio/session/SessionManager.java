@@ -26,7 +26,7 @@ public class SessionManager {
 		if(cookies != null) {
 			for(Cookie cookie : cookies) {
 				if(sessionMap.containsKey(cookie.getValue())) {
-					return "정보있음";
+					return sessionMap.get(cookie.getValue());
 				}
 			}
 			return "세션만료";

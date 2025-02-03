@@ -36,3 +36,534 @@
     transform: rotate(360deg);
   }
 }
+
+
+/* ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ */
+
+/* 포트폴리오 수정 스타일*/
+.portfolioBoard_Edit_div{
+  display: flex;
+  justify-content: center;
+}
+
+.portfolioBoard_EditSub_div{
+  margin: 30px;
+  padding: 30px;
+  width: 1400px;
+  border: 1px solid black;  
+}
+
+.portfolioBoard_EditImgInput_div{ 
+  margin-top: 30px;
+}
+
+.portfolioBoard_EditButton_div{
+  margin-top: 50px;
+  display: flex;
+  justify-self: right;
+  flex-direction: column;
+}
+
+.portfolioBoard_EditButton_div button{
+  margin-top: 30px;
+}
+
+/* 포트폴리오 게시판 스타일 */
+.portfolioBoard_div{
+  display: flex;
+  justify-content: center;
+}
+
+.portfolioBoard_List_div{
+  display: flex;
+  width: 1300px;
+  gap: 30px;
+  flex-wrap: wrap;
+  margin-top: 50px;
+}
+
+.portfolioBoard_ListInfo_div{
+  display: flex;
+  gap: 20px;
+  width: 300px;
+}
+
+.portfolioBoard_ListInfoFirst_div{
+  width:300px;
+}
+
+.portfolioBoard_ListInfoSecond_div{
+  width:70px;
+}
+
+.portfolio{
+  border-radius: 20px;
+  text-align: left;
+}
+
+.portfolio img{
+  border-radius: 20px;
+}
+
+.portfolio:hover{
+  box-shadow: 0px 0px 10px black;
+}
+
+/* 댓글 작성 스타일 */
+.comment_div button{
+  height: 56px;
+}
+
+.sendcomment_div{
+  display: flex;
+}
+
+.sendcommenttext_div{
+  width: 95%;
+}
+
+/* 댓글 스타일 */
+.commentsread_div{
+  margin-top: 20px;
+  margin-bottom: 20px;
+  display: flex;
+}
+
+.commentsreadinfo_div{
+  width: 90%;
+}
+
+/* 카카오 버튼 */
+.kakao_button:hover{
+  cursor: pointer;
+}
+
+/* 왼쪽 토글바 */
+.MuiDrawer-paper{
+  margin-top: 70px;
+}
+
+/* 마이 페이지  */
+.myPage_div{
+  display: flex;
+  margin: 0 auto;
+  margin-top: 30px;
+  width: 1300px;
+  height: 800px;
+
+  flex-direction: column;
+
+  border: 1px solid black;
+}
+
+.myPage_Top_div{
+  width: 1250px;
+  height: 450px;
+  margin: 25px;
+  
+  display: flex;
+
+  /* border: 1px solid black; */
+}
+
+.myPage_Bottom_div{
+  width: 1250px;
+  height: 250px;
+  margin: 25px;
+
+  /* border: 1px solid black; */
+}
+
+.myPage_BottomTitle_div{
+  display: flex;
+  width: 1250px;
+  height: 40px;
+  gap: 990px;
+}
+
+.myPage_BottomContent_div{
+  display: flex;
+  width: 1250px;
+  padding: 30px;
+}
+
+.myPage_TopLeft_div{
+  width: 350px;
+  height: 430px;
+  margin-left: 10%;
+
+  border: 1px solid black;
+}
+
+.myPage_TopMiddle_div{
+  width: 500px;
+  height: 430px;
+  margin-left: 10%;
+
+  border: 1px solid black;
+}
+
+
+/* 채팅방 */
+/* 채팅방 전체 레이아웃 */
+.chat-room-container {
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+  margin: 0 auto;
+}
+
+.chat-room-content {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+/* input 필드와 버튼을 같은 라인에 배치 */
+.input-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  margin-left: 32%;
+}
+
+/* 채팅방 리스트 */
+.room-list {
+  width: 100%;
+  max-width: 600px;
+  margin-top: 20px;
+  font-size: 18px;
+  font-weight: bold;
+  margin-left: 32%;
+  margin-bottom: 20px;
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease-in-out, transform 0.3s ease;
+}
+
+/* 개별 채팅방 아이템 */
+.room-item {
+  background-color: #f9f9f9;
+  padding: 15px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* 입장 버튼 스타일 */
+.room-item button {
+  background-color: #2196F3;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+}
+
+.room-item button:hover {
+  background-color: #0b7dda;
+}
+
+/* 채팅 영역 */
+.chat-container {
+  flex: 10;
+  display: flex;
+  flex-direction: column;
+  max-width: 50%;
+  margin-left: 25%;
+  height: 100%;
+  justify-content: flex-end;
+  background-color: #f2f2f2;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.message-list {
+  overflow-y: auto;
+  max-height: 400px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.my-message {
+  align-self: flex-end;
+  background-color: #dcf8c6; /* 연한 초록색 */
+  padding: 10px;
+  border-radius: 10px;
+  max-width: 60%;
+}
+
+.other-message {
+  align-self: flex-start;
+  background-color: #ffffff; /* 흰색 */
+  padding: 10px;
+  border-radius: 10px;
+  max-width: 60%;
+}
+
+.message-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-id {
+  font-weight: bold;
+  font-size: 0.9rem;
+  margin-bottom: 5px; /* 세로 간격 줄이기 */
+}
+
+.message-time {
+  font-size: 0.8rem;
+  color: gray;
+  margin-top: 0px; /* 세로 간격 줄이기 */
+  margin-bottom: 0px; /* 세로 간격 줄이기 */
+}
+
+.message-text {
+  font-size: 1rem;
+  margin-top: 1px; /* 세로 간격 줄이기 */
+  margin-bottom: 5px; /* 세로 간격 줄이기 */
+}
+
+
+/* 멤버 리스트 스타일 */
+.member-list {
+  flex: 1;
+  background-color: #ffffff;
+  border-radius: 10px;
+  margin-right: 100px;
+  padding: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  max-width: 100px;
+}
+
+.member-list h3 {
+  text-align: center;
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+
+.member-list ul {
+  list-style: none;
+  padding: 0;
+}
+
+.member-list li {
+  padding: 10px;
+  margin-bottom: 10px;
+  background-color: #f9f9f9;
+  border-radius: 5px;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+}
+
+.member-list li p {
+  font-weight: bold;
+  margin: 0;
+}
+
+.member-list li span {
+  font-size: 0.9rem;
+  color: #555;
+}
+
+
+
+/* 캘린더 */
+.calendar-container {
+  text-align: center;
+  margin: 20px;
+  width: 1500px;
+}
+
+.fc { /* FullCalendar 전체 스타일 */
+  height: 80vh !important; /* 캘린더 높이 조정 */
+}
+
+.add-event-btn {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.add-event-btn:hover {
+  background-color: #0056b3;
+}   
+
+
+
+
+/* 캘린더 이벤트 */
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.popup-content {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 300px;
+  text-align: center;
+}
+
+input {
+  margin: 10px 0;
+  padding: 5px;
+  width: 90%;
+}
+
+button {
+  margin: 5px;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+
+/* 버튼 색 변경 */
+/* button:first-child {
+  background-color: #28a745;
+  color: white;
+}
+
+button:last-child {
+  background-color: #dc3545;
+  color: white;
+} */
+
+
+
+/* 캘린더 리스트 */
+/* 기본적인 레이아웃 */
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: Arial, sans-serif;
+}
+
+/* input 필드와 버튼을 같은 라인에 배치 */
+.input-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-left: 0px;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+/* input 필드 스타일 */
+.input-field {
+  padding: 10px;
+  font-size: 14px;
+  width: 200px;  /* 너비를 고정하여 버튼과 맞춰서 배치 */
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+/* 버튼 스타일 */
+.button {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.button:hover {
+  background-color: #45a049;
+}
+
+/* 캘린더 리스트 */
+.calendar-list {
+  width: 100%;
+  max-width: 600px;
+  margin-top: 20px;
+  font-size: 18px;  /* 캘린더 리스트 글씨 크기 키움 */
+  font-weight: bold;  /* 글씨 두껍게 */
+  margin-bottom: 20px; /* 여백 추가 */
+}
+
+/* 개별 캘린더 아이템 */
+.calendar-item {
+  background-color: #f9f9f9;
+  padding: 15px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border: 1px solid #ddd;  /* 테두리 추가 */
+  display: flex;
+  justify-content: space-between;  /* 제목과 버튼을 양쪽으로 배치 */
+  align-items: center;
+}
+
+.calendar-item p {
+  margin: 5px 0;
+  font-size: 16px;  /* 텍스트 크기 조정 */
+  color: #333;  /* 글씨 색상 변경 */
+}
+
+/* 캘린더 입장 버튼 스타일 */
+.calendar-item button {
+  background-color: #2196F3;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.calendar-item button:hover {
+  background-color: #0b7dda;
+}
+
+/* 캘린더 입장 화면 */
+.calendar-page {
+  margin-top: 20px;
+  text-align: center;
+}
+
+/* 뒤로 가기 버튼 스타일 */
+.back-button {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.back-button:hover {
+  background-color: #da190b;
+}
+
+.chat-room-container .input-container {
+  margin-left: 30%;
+}
