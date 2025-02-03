@@ -143,7 +143,7 @@ export default function AppBarCustom({ setUser = () => {} }) {
 
                 {/* 사이트 이름 */}
                 <Typography variant="h4" sx={{ textAlign: 'center', flexGrow: 5, bgcolor: 'black' }}>
-                    <a href='/' className='custom_a'>사이트 이름</a>
+                    <a href='/' className='custom_a'>MY-PORTFOLIO</a>
                 </Typography>
 
                 {/* 로그인 여부에 따른 출력 */}

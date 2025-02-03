@@ -74,6 +74,20 @@ export default function ChatRoom({ roomInfo, user }) {
       .catch((error) => console.log(error));
   }
 
+  //타임스탬스 포멧 변환
+  function handleChangeTimeFormat(time) {
+    const date = new Date(time);
+    const year = date.getFullYear().toString();
+    const month = ("0" + (date.getMonth() + 1)).slice(-2);
+    const day = ("0" + date.getDate()).slice(-2);
+    const hour = ("0" + date.getHours()).slice(-2);
+    const minute = ("0" + date.getMinutes()).slice(-2);
+    const second = ("0" + date.getSeconds()).slice(-2);
+
+    const formattedDateTime = `${year}-${month}-${day} ${hour}:${minute}:${second}`;
+    return formattedDateTime;
+}
+
   return (
     <div className="chat-room-container">
       <Button color="error" onClick={handleExitRoom}>
@@ -91,8 +105,8 @@ export default function ChatRoom({ roomInfo, user }) {
                 >
                   <div className="message-content">
                     <p className="user-id">{chat.userId}</p>
-                    <p className="message-time">{chat.sendTime}</p>
                     <p className="message-text">{chat.content}</p>
+                    <p className="message-time">{handleChangeTimeFormat(chat.sendTime)}</p>
                   </div>
                 </div>
               ))}

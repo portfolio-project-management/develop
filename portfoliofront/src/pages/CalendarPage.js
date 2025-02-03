@@ -55,11 +55,9 @@ export default function ({calendarInfo, back}) {
                 if(getPlan.doing === "생성"){ //생성
                     setEvents((prevChats) => [...prevChats, newPlan])
                 }else if (getPlan.doing === "수정"){ //수정
-                    const copyEvents = events.filter(event => event.id !== newPlan.id);
-                    setEvents([...copyEvents,newPlan]);
+                    setEvents(prev => prev.map(event => event.id === newPlan.id ? newPlan : event));
                 }else if (getPlan.doing === "삭제"){ //삭제
-                    const copyEvents = events.filter(event => event.id !== newPlan.id);
-                    setEvents(copyEvents);
+                    setEvents(prev => prev.filter(event => event.id !== newPlan.id));
                 }else{ // 이상한 데이터 넘어옴
                     alert("서버에서 처리 오류", getPlan.doing)
                 }
@@ -79,7 +77,7 @@ export default function ({calendarInfo, back}) {
             ...event,
             calendarId : calendarInfo.id
         }));
-        setSelectedEvent(null);
+        setSelectedEvent();
     };
 
     //타임스탬스 포멧 변환
@@ -98,6 +96,7 @@ export default function ({calendarInfo, back}) {
 
     return (
         <div>
+            <p>초대코드 : {calendarInfo.invitationCode}</p>
             <Button color="error" onClick={back}>뒤로가기</Button>
             <div className="calendar-container">
                 <h1>일정관리</h1>
@@ -142,6 +141,7 @@ export default function ({calendarInfo, back}) {
                         isOpen={isPopupOpen}
                         onClose={() => {
                             setIsPopupOpen(false);
+                            setSelectedEvent(null);
                         }}
 
                         //생성이면 비어있는 이벤트, 아니면 이벤트 담아서 전달

@@ -33,6 +33,7 @@ export default function ChatRoomList() {
             .then(response => response.json())
             .then(data => {
                 setRooms(data);
+                setRoomName("");
             })
             .catch(error => console.log(error));
     }
@@ -120,7 +121,7 @@ export default function ChatRoomList() {
                                 rooms && rooms.map((room, index) => (
                                     <div className="room-item" key={index}>
                                         <p>제목: {room.name}</p>
-                                        <p>생성자: {room.createUser}</p>
+                                        <p>생성자: {room.createUserId}</p>
                                         <button name={index} onClick={handleOpenChat}>입장</button>
                                     </div>
                                 ))

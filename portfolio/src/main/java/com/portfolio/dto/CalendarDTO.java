@@ -25,11 +25,12 @@ public class CalendarDTO {
 	}
 
 	// 캘린더 리스트 띄울때
-	public CalendarDTO(int id, String name, String createUser) {
+	public CalendarDTO(int id, String name, String createUser, String invitationCode) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.createUser = createUser;
+		this.invitationCode = invitationCode;
 	}
 
 	

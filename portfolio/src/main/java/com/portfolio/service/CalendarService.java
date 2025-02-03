@@ -36,7 +36,8 @@ public class CalendarService {
 				.map((calendar) -> new CalendarDTO(
 						calendar.getId(),
 						calendar.getName(),
-						calendar.getUser().getUserId()
+						calendar.getUser().getUserId(),
+						calendar.getInvitationCode()
 					))
 				.collect(Collectors.toList());
 	}

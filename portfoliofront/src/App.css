@@ -291,7 +291,51 @@
   overflow-y: auto;
   max-height: 400px;
   margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
+
+.my-message {
+  align-self: flex-end;
+  background-color: #dcf8c6; /* 연한 초록색 */
+  padding: 10px;
+  border-radius: 10px;
+  max-width: 60%;
+}
+
+.other-message {
+  align-self: flex-start;
+  background-color: #ffffff; /* 흰색 */
+  padding: 10px;
+  border-radius: 10px;
+  max-width: 60%;
+}
+
+.message-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-id {
+  font-weight: bold;
+  font-size: 0.9rem;
+  margin-bottom: 5px; /* 세로 간격 줄이기 */
+}
+
+.message-time {
+  font-size: 0.8rem;
+  color: gray;
+  margin-top: 0px; /* 세로 간격 줄이기 */
+  margin-bottom: 0px; /* 세로 간격 줄이기 */
+}
+
+.message-text {
+  font-size: 1rem;
+  margin-top: 1px; /* 세로 간격 줄이기 */
+  margin-bottom: 5px; /* 세로 간격 줄이기 */
+}
+
 
 /* 멤버 리스트 스타일 */
 .member-list {
@@ -339,6 +383,11 @@
 .calendar-container {
   text-align: center;
   margin: 20px;
+  width: 1500px;
+}
+
+.fc { /* FullCalendar 전체 스타일 */
+  height: 80vh !important; /* 캘린더 높이 조정 */
 }
 
 .add-event-btn {
@@ -394,6 +443,7 @@ button {
   border-radius: 5px;
 }
 
+
 /* 버튼 색 변경 */
 /* button:first-child {
   background-color: #28a745;
@@ -421,6 +471,7 @@ button:last-child {
   display: flex;
   flex-direction: row;
   align-items: center;
+  margin-left: 0px;
   gap: 10px;
   margin-bottom: 20px;
 }
@@ -511,4 +562,8 @@ button:last-child {
 
 .back-button:hover {
   background-color: #da190b;
+}
+
+.chat-room-container .input-container {
+  margin-left: 30%;
 }

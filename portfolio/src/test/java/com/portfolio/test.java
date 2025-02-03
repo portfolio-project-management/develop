@@ -36,8 +36,4 @@ public class test {
 //		userProposalRepository.save(userProposal);
 //	}
 	
-	@Test
-	public void delete() {
-		userRepository.deleteAll();
-	}
 }
